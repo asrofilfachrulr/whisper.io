@@ -30,7 +30,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest:latest
+      - name: Build and push Docker images
+        # You may pin to the exact commit or the version.
+        # uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825
+        uses: docker/build-push-action@v4.1.1
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest
