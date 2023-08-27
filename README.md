@@ -1,4 +1,4 @@
-# whisper.io
+# template-nuxt
 
 ## Build Setup
 
