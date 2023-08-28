@@ -1,11 +1,15 @@
 <template>
   <div>
-    <NavBar />
+    <header>
+      <NavBar />
+    </header>
+    <main>
+      <HomeHero />
+      <HomeAbout />
+      <HomeReason />
+    </main>
+    <footer>
+      <HomeFooter />
+    </footer>
   </div>
 </template>
-
-<script>
-export default {
-  name: "IndexPage",
-};
-</script>

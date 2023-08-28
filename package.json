@@ -1,5 +1,5 @@
 {
-  "name": "template-nuxt",
+  "name": "whisper-io",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,26 +11,17 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
-    "bootstrap": "^4.6.2",
-    "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
+    "jquery": "^3.7.0",
     "nuxt": "^2.15.8",
+    "tailwindcss": "^3.3.3",
+    "ts-interface-checker": "^1.0.2",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
   },
-<<<<<<< HEAD
-  "devDependencies": {}
-=======
   "devDependencies": {
-    "@babel/eslint-parser": "^7.19.1",
-    "@nuxtjs/eslint-config": "^11.0.0",
-    "@nuxtjs/eslint-module": "^3.1.0",
     "@nuxtjs/tailwindcss": "^5.3.3",
-    "eslint": "^8.24.0",
-    "eslint-plugin-nuxt": "^4.0.0",
-    "eslint-plugin-vue": "^9.5.1",
     "postcss": "^8.4.17"
   }
->>>>>>> parent of 4d59653 (init files)
 }
