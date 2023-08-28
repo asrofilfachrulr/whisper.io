@@ -1,5 +1,7 @@
 <template>
-  <Tutorial />
+  <div>
+    <NavBar />
+  </div>
 </template>
 
 <script>
