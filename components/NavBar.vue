@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="fixed top-0 w-full backdrop-blur flex justify-between items-center p-4 z-50"
+    class="fixed top-0 w-full flex justify-between items-center p-4 z-50"
     :id="scrolled ? 'scrolled-navbar' : ''"
   >
     <div class="left">
@@ -13,21 +13,21 @@
       <ul class="flex flex-row space-x-8 text-sm font-semibold">
         <li class="nav-items">
           <a
-            class="nav-links hover:text-violet-700 text-center transition-colors duration-500 ease-in-out"
+            class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#about"
             >What's This?</a
           >
         </li>
         <li class="nav-items">
           <a
-            class="nav-links hover:text-violet-700 text-center transition-colors duration-500 ease-in-out"
+            class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#reason"
             >Why do I?</a
           >
         </li>
         <li class="nav-items">
           <a
-            class="nav-links hover:text-violet-700 text-center transition-colors duration-500 ease-in-out"
+            class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#profile"
             >Whose own this?</a
           >
@@ -37,11 +37,9 @@
     <div class="right me-2">
       <ul class="flex flex-row space-x-8 text-sm font-semibold">
         <li class="nav-items">
-          <a
-            class="text-center transition-colors duration-500 ease-in-out bg-violet-700 text-white px-4 py-3 rounded-md hover:bg-violet-900 hover:text-violet-100"
-            href="#"
-            >Login</a
-          >
+          <Button>
+            <a href="#">Login</a>
+          </Button>
         </li>
       </ul>
     </div>
@@ -71,7 +69,7 @@ export default {
 
 <style>
 nav {
-  background: transparent;
+  background: var(--bg-dark-clr);
 }
 
 .nav-links {
@@ -80,8 +78,8 @@ nav {
 
 .nav-links::before {
   position: absolute;
-  bottom: -5px;
-  left: 0;
+  bottom: -8px;
+  left: 10%;
   content: "";
   background-color: #925fe2;
   height: 3px;
@@ -90,13 +88,15 @@ nav {
 }
 
 .nav-links:hover::before {
-  width: 100%;
+  width: 80%;
 }
 
 #scrolled-navbar {
-  border-color: #0f172a1a;
-  border-bottom-width: 1px;
-  background: white;
+  border-color: #322050;
+  border-bottom-width: 2px;
+  box-shadow: 0px 5px 5px 0px rgba(50, 32, 80, 0.5);
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(50, 32, 80, 0.5);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(50, 32, 80, 0.5);
 }
 
 nav .middle {

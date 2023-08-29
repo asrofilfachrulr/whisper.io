@@ -1,7 +1,7 @@
 <template>
   <CustomContainer>
     <section
-      class="mt-20 lg:mt-0"
+      class="mt-20 xl:mt-0"
       id="reason"
       style="min-height: max(100vh, 600px)"
     >

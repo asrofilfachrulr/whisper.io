@@ -1,6 +1,6 @@
 <template>
   <CustomContainer>
-    <section id="about" style="min-height: max(100vh, 600px)">
+    <section class="mt-12" id="about" style="min-height: max(100vh, 600px)">
       <div class="flex items-center flex-col">
         <h1
           class="sm:text-xl md:text-2xl lg:text:3xl font-semibold section-title mb-6"
@@ -8,7 +8,7 @@
         >
           WHAT IS THIS
         </h1>
-        <p class="mb-8">
+        <p class="mb-8 font-semibold">
           The one-stop app to have
           <span class="text-violet-700 font-semibold">quick message</span> to
           anyone nearby or in different planet!

@@ -5,10 +5,12 @@
       :key="index"
       class="w-full md:w-1/3 px-4"
     >
-      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-zinc-800">
         <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2">{{ item.title }}</div>
-          <p class="text-gray-700 text-base">{{ item.description }}</p>
+          <div class="font-bold text-xl mb-2 text-violet-700">
+            {{ item.title }}
+          </div>
+          <p class="text-gray-300 text-base">{{ item.description }}</p>
         </div>
       </div>
     </div>

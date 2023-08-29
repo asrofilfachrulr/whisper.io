@@ -1,40 +1,48 @@
 <template>
   <div class="hero">
-    <div class="backdrop-blur">
-      <CustomContainer>
+    <CustomContainer>
+      <div
+        class="hero-block flex flex-col justify-center w-full"
+        style="min-height: max(100vh, 600px)"
+      >
         <div
-          class="hero-block flex flex-col justify-center w-full"
-          style="min-height: max(100vh, 600px)"
+          class="flex flex-col-reverse items-center md:justify-between md:flex-row w-full"
         >
           <div
-            class="flex md:justify-between w-full md:flex-row flex-col-reverse items-center"
+            class="left w-full flex flex-col items-center md:w-8/12 md:block"
           >
-            <div
-              class="left w-full flex flex-col items-center md:w-auto md:block"
+            <h1
+              class="font-semibold xl:text-7xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-sans text-center md:text-left"
+              id="hero-brand"
+              style="line-height: 1.2"
             >
-              <h1
-                class="font-semibold lg:text-7xl md:text-6xl sm:text-4xl text-3xl font-sans"
-                id="hero-brand"
-                style="line-height: 1.5"
+              The Very Number #1 Platform for Secure Messaging and Quick Chat
+            </h1>
+            <h4 class="md:text-3xl sm:text-2xl text-xl mt-8 font-mono">
+              whisping your
+              <span class="text-violet-700 font-semibold">{{ chTag }}</span
+              ><span
+                class="blink transition-opacity ease-in-out text-violet-700"
+                ><span class=""> ▏</span></span
               >
-                Whisper.io
-              </h1>
-              <h4 class="lg:text-4xl md:text-3xl sm:text-2xl text-xl">
-                whisping your
-                <span class="text-violet-700 font-semibold">{{ chTag }}</span
-                ><span
-                  class="blink transition-opacity ease-in-out text-violet-700"
-                  ><span class=""> ▏</span></span
-                >
-              </h4>
-            </div>
-            <div class="right">
-              <img src="/hero.png" alt="" />
-            </div>
+            </h4>
+            <Button :class="'mt-8'">Start Whisping Now ➔</Button>
+          </div>
+          <div
+            class="right flex justify-center"
+            style="width: 200px; height: 100px"
+          >
+            <img class="invert inline" src="/swave.gif" alt="" style="" />
+            <img
+              class="invert inline"
+              src="/swave.gif"
+              alt=""
+              style="rotate: 180deg"
+            />
           </div>
         </div>
-      </CustomContainer>
-    </div>
+      </div>
+    </CustomContainer>
   </div>
 </template>
 
@@ -44,7 +52,7 @@ export default {
     return {
       indexTag: 0,
       chTag: "",
-      chTags: ["friends...", "strangers...", "crush...", "enemy..."],
+      chTags: ["friends...", "rival...", "crush...", "enemy..."],
     };
   },
   methods: {
@@ -80,16 +88,16 @@ export default {
 </script>
 
 <style scoped>
-.hero {
+/* .hero {
   background-image: linear-gradient(
     -180deg,
     #ffffff 0%,
     #eee6ec 25%,
-    #f3e8f1 50%,
+    #ead5f0 50%,
     #eee6ec 75%,
     #fff 100%
   );
-}
+} */
 
 #hero-brand {
   font-family: "Lato", sans-serif;

@@ -1,5 +1,5 @@
 <template>
-  <div class="card max-w-sm bg-white rounded-xl shadow-md overflow-hidden">
+  <div class="card max-w-sm bg-zinc-800 rounded-xl shadow-md overflow-hidden">
     <img
       class="w-40 h-w-40 mt-8 mx-auto rounded-xl"
       src="/profile-photo.jpg"

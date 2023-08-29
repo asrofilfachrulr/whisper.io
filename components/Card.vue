@@ -1,5 +1,5 @@
 <template>
-  <div class="card max-w-sm bg-white rounded-xl shadow-md overflow-hidden">
+  <div class="card max-w-sm bg-zinc-800 rounded-xl shadow-md overflow-hidden">
     <div class="flex">
       <div class="flex-shrink-0 flex justify-center items-center">
         <img class="w-fit h-fit ps-4" :src="imageUrl" alt="Card image" />
@@ -10,7 +10,7 @@
         >
           {{ cardTitle }}
         </div>
-        <p class="mt-2 text-gray-500">
+        <p class="mt-2 text-gray-400 font-semibold">
           {{ cardBody }}
         </p>
       </div>
