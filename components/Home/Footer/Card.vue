@@ -1,10 +1,12 @@
 <template>
   <div class="card max-w-sm bg-zinc-800 rounded-xl shadow-md overflow-hidden">
-    <img
-      class="w-40 h-w-40 mt-8 mx-auto rounded-xl"
-      src="/profile-photo.jpg"
-      alt="Card image"
-    />
+    <div class="flex h-full justify-center items-center">
+      <img
+        class="w-40 h-40 mt-8 mx-auto rounded-xl"
+        src="/profile-photo.jpg"
+        alt="Card image"
+      />
+    </div>
     <div class="p-8">
       <div
         class="uppercase tracking-wide text-sm text-violet-600 font-semibold"

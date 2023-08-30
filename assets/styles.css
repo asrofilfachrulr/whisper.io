@@ -2,6 +2,9 @@
 
 :root {
   --bg-dark-clr: #0c0c0d;
+  --clr-accent: rgb(109, 40, 217);
+  --clr-accent-darker: rgb(86, 31, 175);
+  --clr-accent-lighter: rgb(125, 71, 211);
 }
 
 html {
@@ -23,8 +26,14 @@ body {
   content: '';
   position: absolute;
   bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #925fe2;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background-color: var(--clr-accent);
+  opacity: 0.5;
+  transition: all cubic-bezier(0.4, 0, 0.2, 1) 500ms;
+}
+
+section:hover .section-title::before {
+  opacity: 0.75;
 }

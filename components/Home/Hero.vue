@@ -26,7 +26,11 @@
                 ><span class=""> ▏</span></span
               >
             </h4>
-            <Button :class="'mt-8'">Start Whisping Now ➔</Button>
+            <NuxtLink to="/login"
+              ><ButtonOutline :class="'mt-8'"
+                >Start Whisping Now ➔</ButtonOutline
+              ></NuxtLink
+            >
           </div>
           <div
             class="right flex justify-center"

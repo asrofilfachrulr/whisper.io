@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="fixed top-0 w-full flex justify-between items-center p-4 z-50"
+    class="fixed top-0 w-full flex justify-between items-center p-2 z-50"
     :id="scrolled ? 'scrolled-navbar' : ''"
   >
     <div class="left">
@@ -15,21 +15,21 @@
           <a
             class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#about"
-            >What's This?</a
+            >About</a
           >
         </li>
         <li class="nav-items">
           <a
             class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#reason"
-            >Why do I?</a
+            >Why</a
           >
         </li>
         <li class="nav-items">
           <a
             class="nav-links hover:text-violet-400 text-center transition-colors duration-500 ease-in-out"
             href="#profile"
-            >Whose own this?</a
+            >Profile</a
           >
         </li>
       </ul>
@@ -37,9 +37,7 @@
     <div class="right me-2">
       <ul class="flex flex-row space-x-8 text-sm font-semibold">
         <li class="nav-items">
-          <Button>
-            <a href="#">Login</a>
-          </Button>
+          <NuxtLink to="login"><ButtonOutline>Login</ButtonOutline></NuxtLink>
         </li>
       </ul>
     </div>
@@ -87,7 +85,8 @@ nav {
   transition: all 400ms ease-in-out;
 }
 
-.nav-links:hover::before {
+.nav-links:hover::before,
+.nav-links:active::before {
   width: 80%;
 }
 

@@ -3,25 +3,28 @@
     <section class="mt-12" id="about" style="min-height: max(100vh, 600px)">
       <div class="flex items-center flex-col">
         <h1
-          class="sm:text-xl md:text-2xl lg:text:3xl font-semibold section-title mb-6"
+          class="text-2xl md:text-3xl lg:text-4xl font-semibold section-title transition-all duration-500"
           style="line-height: 2"
         >
-          WHAT IS THIS
+          WHAT IS WHISPER.IO
         </h1>
-        <p class="mb-8 font-semibold">
-          The one-stop app to have
-          <span class="text-violet-700 font-semibold">quick message</span> to
-          anyone nearby or in different planet!
+        <p
+          class="my-10 font-semibold text-lg md:text-xl xl:text-2xl transition-all duration-500"
+        >
+          The one-stop app to deliver
+          <span class="text-violet-700 font-bold">secured quick message</span>
+          to anyone!
         </p>
         <div
           class="cards flex flex-wrap gap-8 mx-auto justify-center items-center max-w-4xl"
         >
-          <Card
+          <CardCustomDimmed
             v-for="(content, i) in cardsContent"
             :key="i"
             :imageUrl="content.url"
             :cardTitle="content.title"
             :cardBody="content.body"
+            :class="'w-full h-fit md:h-48 lg:h-44 md:w-64 lg:w-80 2xl:w-full'"
           />
         </div>
       </div>
@@ -42,17 +45,17 @@ export default {
         {
           url: "https://img.icons8.com/external-line-lima-studio/50/925fe2/external-toy-international-children-day-line-lima-studio-3.png",
           title: "ease",
-          body: "Tap tap tap, type type type, yes yes yes! never been easy as it was!",
+          body: "Much easy as tap and type, then go nap or hide. I ain't gonna call the cops tho",
         },
         {
           url: "https://img.icons8.com/ios/50/925fe2/coins--v1.png",
           title: "free",
-          body: "We are not capitalist, lowerelist or cursivist! WE ARE psst... we are whisper.io",
+          body: "We are not capitalist, lowercasist or uppercasist! WE ARE psst... we are whisper(ist)",
         },
         {
           url: "https://img.icons8.com/ios/50/925fe2/lock-2.png",
           title: "secure",
-          body: "We have some cool dudes working on computer for 12 hours a day (not including their voluntarily night shift) to prevent you cry for losing data",
+          body: "We've to working on computer for 12 hours a day just to stop you cry for leaked data",
         },
       ],
     };
