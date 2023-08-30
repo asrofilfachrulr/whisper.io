@@ -1,23 +1,23 @@
 <template>
   <div
-    class="card transition-all duration-700 max-w-sm bg-transparent rounded-lg shadow-md overflow-hidden"
+    class="card-custom transition-all duration-700 max-w-sm bg-transparent rounded-lg shadow-md overflow-hidden"
   >
     <div class="flex h-full">
       <div class="flex-shrink-0 flex justify-center items-center ps-4">
         <img
-          class="w-fit h-fit opacity-20 transition-all duration-400"
+          class="w-fit h-fit opacity-40 transition-all duration-400"
           :src="imageUrl"
           alt="Card image"
         />
       </div>
       <div class="p-6">
         <div
-          class="transition-colors duration-1000 uppercase tracking-wide text-base lg:text-lg font-semibold card-title"
+          class="transition-colors duration-1000 uppercase tracking-wide text-base lg:text-lg font-semibold title"
         >
           {{ cardTitle }}
         </div>
         <p
-          class="mt-2 text-gray-400 text-sm transition-opacity duration-500 opacity-20 xl:text-base font-semibold card-body"
+          class="mt-2 text-gray-400 text-sm transition-opacity duration-500 opacity-40 xl:text-base font-semibold body"
         >
           {{ cardBody }}
         </p>
@@ -44,40 +44,40 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.card-custom {
   cursor: default;
   box-shadow: 0px 0px 10px 0px var(--clr-accent);
   -webkit-box-shadow: 0px 0px 10px 0px var(--clr-accent);
   -moz-box-shadow: 0px 0px 10px 0px var(--clr-accent);
 }
 
-.card-title {
+.title {
   color: var(--clr-accent-darker);
 }
 
-.card:hover,
-.card:active {
+.card-custom:hover,
+.card-custom:active {
   box-shadow: 0px 0px 10px 4px var(--clr-accent);
   -webkit-box-shadow: 0px 0px 10px 4px var(--clr-accent);
   -moz-box-shadow: 0px 0px 10px 4px var(--clr-accent);
   /* transform: scale(1.01); */
 }
 
-.card:hover img,
-.card:hover .card-body {
+.card-custom:hover img,
+.card-custom:hover .body {
   opacity: 1;
 }
 
-.card:active img,
-.card:active .card-body {
+.card-custom:active img,
+.card-custom:active .body {
   opacity: 1;
 }
 
-.card:hover .card-title {
+.card-custom:hover .card-title {
   color: var(--clr-accent);
 }
 
-.card:active .card-title {
+.card-custom:active .card-title {
   color: var(--clr-accent);
 }
 </style>
