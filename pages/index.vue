@@ -1,17 +1,17 @@
 <template>
-  <div id="index">
+  <div class="index">
     <header>
-      <NavBar />
+      <IndexNavBar />
     </header>
     <main>
       <div class="backdrop-blur-lg bg-black/50">
-        <HomeHero />
-        <HomeAbout />
-        <HomeReason />
+        <IndexHero />
+        <IndexAbout />
+        <IndexReason />
       </div>
     </main>
     <footer>
-      <HomeFooter />
+      <IndexFooter />
     </footer>
   </div>
 </template>

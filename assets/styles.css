@@ -19,11 +19,11 @@ body {
   overflow-x: hidden;
 }
 
-#index main{
+.index main{
   background: rgb(28,1,41);
-  background: -moz-linear-gradient(90deg, rgba(28,1,41,1) 0%, rgba(50,6,70,1) 59%, rgba(28,1,41,1) 100%);
-  background: -webkit-linear-gradient(90deg, rgba(28,1,41,1) 0%, rgba(50,6,70,1) 59%, rgba(28,1,41,1) 100%);
-  background: linear-gradient(90deg, rgba(28,1,41,1) 0%, rgba(50,6,70,1) 59%, rgba(28,1,41,1) 100%);
+  background: -moz-linear-gradient(45deg, rgba(28,1,41,1) 0%, rgba(75,20,99,1) 59%, rgba(28,1,41,1) 100%);
+  background: -webkit-linear-gradient(45deg, rgba(28,1,41,1) 0%, rgba(75,20,99,1) 59%, rgba(28,1,41,1) 100%);
+  background: linear-gradient(45deg, rgba(28,1,41,1) 0%, rgba(75,20,99,1) 59%, rgba(28,1,41,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1c0129",endColorstr="#1c0129",GradientType=1);
 }
 
