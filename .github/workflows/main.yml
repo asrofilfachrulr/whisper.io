@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy-docker-image:
+  build-and-push-docker-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +40,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest
 
-  deploy:
+  deploy-to-vm:
+    needs: build-and-deploy-docker-image
     runs-on: ubuntu-latest
 
     steps:
@@ -51,4 +52,4 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd app && ./update-app.sh
+            cd app && ./update-app.sh -u ${{secrets.VM_CMD_ARG}}
