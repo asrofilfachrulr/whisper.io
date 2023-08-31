@@ -67,7 +67,7 @@ export default {
 
 <style>
 nav {
-  background: var(--bg-dark-clr);
+  background: transparent;
 }
 
 .nav-links {
@@ -91,6 +91,7 @@ nav {
 }
 
 #scrolled-navbar {
+  background: var(--bg-dark-clr);
   border-color: #322050;
   border-bottom-width: 2px;
   box-shadow: 0px 5px 5px 0px rgba(50, 32, 80, 0.5);

@@ -1,5 +1,5 @@
 <template>
-  <div class="hero">
+  <div class="hero overflow-x-clip">
     <CustomContainer>
       <div
         class="hero-block flex flex-col justify-center w-full"
@@ -12,7 +12,7 @@
             class="left w-full flex flex-col items-center md:w-8/12 md:block"
           >
             <h1
-              class="font-semibold xl:text-7xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-sans text-center md:text-left"
+              class="font-semibold xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl font-sans text-center md:text-left"
               id="hero-brand"
               style="line-height: 1.2"
             >
@@ -46,15 +46,14 @@
             ></NuxtLink>
           </div>
           <div
-            class="right flex justify-center"
+            class="right flex justify-center opacity-50"
             style="width: 200px; height: 100px"
           >
-            <img class="invert inline" src="/swave.gif" alt="" style="" />
             <img
-              class="invert inline"
+              class="inline-block aspect-square opacity-50 md:opacity-90"
               src="/swave.gif"
               alt=""
-              style="rotate: 180deg"
+              style="filter: brightness(50%); transform: scale(4)"
             />
           </div>
         </div>
@@ -105,20 +104,9 @@ export default {
 </script>
 
 <style scoped>
-/* .hero {
-  background-image: linear-gradient(
-    -180deg,
-    #ffffff 0%,
-    #eee6ec 25%,
-    #ead5f0 50%,
-    #eee6ec 75%,
-    #fff 100%
-  );
-} */
-
 #hero-brand {
   font-family: "Lato", sans-serif;
-  text-shadow: 0px 0px 30px 0px rgba(201, 201, 201, 0.75);
+  text-shadow: 0px 0px 30px 0px rgba(105, 5, 145, 0.75);
 }
 .blink {
   animation: blinking 0.7s infinite;

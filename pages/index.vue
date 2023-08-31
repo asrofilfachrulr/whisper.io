@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div id="index">
     <header>
       <NavBar />
     </header>
     <main>
-      <HomeHero />
-      <HomeAbout />
-      <HomeReason />
+      <div class="backdrop-blur-lg bg-black/50">
+        <HomeHero />
+        <HomeAbout />
+        <HomeReason />
+      </div>
     </main>
     <footer>
       <HomeFooter />
