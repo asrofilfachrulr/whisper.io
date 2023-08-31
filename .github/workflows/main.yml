@@ -40,15 +40,15 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest
 
-    deploy:
-      runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Pulling Docker Image and Restart Container via SSH Agent
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.VM_ADDRESS }}
-            username: ${{ secrets.VM_USER }}
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            script: |
-              cd app && ./update-app.sh
+    steps:
+      - name: Pulling Docker Image and Restart Container via SSH Agent
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_ADDRESS }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd app && ./update-app.sh
