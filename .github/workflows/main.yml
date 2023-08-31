@@ -41,7 +41,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/whisper.io:latest
 
   deploy-to-vm:
-    needs: build-and-deploy-docker-image
+    needs: build-and-push-docker-image
     runs-on: ubuntu-latest
 
     steps:
