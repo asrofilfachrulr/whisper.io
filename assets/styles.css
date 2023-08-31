@@ -37,3 +37,7 @@ body {
 section:hover .section-title::before {
   opacity: 0.75;
 }
+
+img, svg {
+  display: inline-block !important;
+}
