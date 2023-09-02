@@ -1,8 +1,19 @@
 <template>
-  <div class="index">
-    <main class="h-screen w-screen flex justify-center items-center">
-      <span>USER HOME PAGE</span>
+  <div class="index relative">
+    <main class="h-screen w-screen flex flex-col justify-center items-center">
+      <span class="mb-4">USER HOME PAGE</span>
+      <CardPlain
+        :item="{
+          title: `Hello, ${$auth.user.fullName}`,
+          description: `You successfuly logged with e-mail ${$auth.user.email}. 
+          User-ID: ${$auth.user.userId}`,
+        }"
+      >
+      </CardPlain>
     </main>
+    <ButtonOutline :class="'absolute top-4 right-4'" @click="logout">
+      Logout
+    </ButtonOutline>
   </div>
 </template>
 
@@ -19,6 +30,13 @@ export default {
         },
       ],
     };
+  },
+  middleware: "home",
+  methods: {
+    logout() {
+      this.$cookies.remove("jwt-token");
+      this.$router.push("/");
+    },
   },
 };
 </script>

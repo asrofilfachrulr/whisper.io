@@ -1,9 +1,5 @@
 <template>
-  <button
-    class="btn rounded-md"
-    style="transition: none !important"
-    @click="$emit('click')"
-  >
+  <button class="btn rounded-md" @click="$emit('click')">
     <slot />
   </button>
 </template>

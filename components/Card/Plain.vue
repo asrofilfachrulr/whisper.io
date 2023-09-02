@@ -1,5 +1,5 @@
 <template>
-  <div class="w-fit lg:w-1/3 px-4">
+  <div class="w-fit px-4">
     <div
       class="max-w-sm rounded overflow-hidden shadow-lg bg-zinc-800 hover:translate-x-2 hover:translate-y-2 transition-transform duration-500"
     >

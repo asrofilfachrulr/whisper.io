@@ -4,23 +4,27 @@
       class="flex w-full h-screen items-center justify-center relative min-h-fit"
       id="login-page-div"
     >
-      <AlertError
+      <AlertGeneral
+        v-if="checkMessage()"
         :class="'absolute top-8 left-auto right-auto'"
         :message="message"
-        @closeAlert="message = ''"
+        @closeAlert="resetMessage"
       />
       <div
         class="card w-full sm:w-96 text-neutral-content px-2 py-1 backdrop-blur-3xl bg-indigo-800/40 rounded-none md:rounded-md"
       >
         <div class="card-body items-center text-center">
           <div class="card-title text-center mb-4">Login to Your Account</div>
-          <div class="form-control w-full max-w-xs">
+          <form class="form-control w-full max-w-xs" @submit.prevent="login">
             <label class="label">
-              <span class="label-text">Email/Username</span>
+              <span class="label-text">Email</span>
             </label>
             <input
               type="text"
               class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+              v-model="email"
+              autofocus
+              required
             />
             <label class="label mt-4">
               <span class="label-text">Password</span>
@@ -28,18 +32,17 @@
             <input
               type="password"
               class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+              v-model="password"
+              required
             />
-          </div>
-          <div class="card-actions justify-end mt-8 w-full">
-            <ButtonSolid
-              :class="'btn-primary w-full'"
-              @click="message = 'Under Development!'"
-            >
-              Login
-            </ButtonSolid>
-          </div>
-          <div class="divider"></div>
-          <ButtonSolid
+            <div class="card-actions justify-end mt-8 w-full">
+              <ButtonSolid :class="'btn-primary w-full'" :type="'submit'">
+                Login
+              </ButtonSolid>
+            </div>
+          </form>
+          <div class="divider">OR</div>
+          <!-- <ButtonSolid
             :class="' bg-red-600 hover:bg-red-800 text-white w-full'"
           >
             <div class="inline-flex justify-between w-full">
@@ -57,7 +60,7 @@
               </svg>
               <span class="flex-grow">Login with Google</span>
             </div>
-          </ButtonSolid>
+          </ButtonSolid> -->
           <span class="mx-auto w-full mt-4 text-sm">
             <NuxtLink
               to="/register"
@@ -77,8 +80,19 @@ export default {
   transition: {
     name: "fade",
   },
-  data: function () {
-    return { message: "" };
+  data() {
+    return {
+      message: {
+        content: "",
+        type: "",
+      },
+      afterRegisMsg: {
+        content: "Registration succeed, please login",
+        type: "info",
+      },
+      email: "",
+      password: "",
+    };
   },
   head() {
     return {
@@ -91,6 +105,56 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await this.$auth.loginWith("local", {
+          data: {
+            email: this.email,
+            password: this.password,
+          },
+        });
+
+        console.log(response);
+
+        const token = response.data.token;
+        this.$cookies.set("jwt-token", token, { path: "/" });
+
+        this.$router.push("/home");
+      } catch (error) {
+        console.log(error);
+        this.setMessage(`login failed: ${error}`, "error");
+        console.log(this.message);
+      }
+    },
+    resetMessage() {
+      this.message = {
+        content: "",
+        type: "",
+      };
+    },
+    setMessage(content, type) {
+      this.message = {
+        content,
+        type,
+      };
+    },
+    checkMessage() {
+      console.log("check");
+      if (this.message.content != "" && this.message.type != "") return true;
+      return false;
+    },
+  },
+  computed: {
+    registrationSuccess() {
+      // Check if the 'registrationSuccess' query parameter is present
+      return this.$route.query.registrationSuccess === "true";
+    },
+  },
+  middleware: "login",
+  mounted() {
+    this.message = this.registrationSuccess ? this.afterRegisMsg : this.message;
   },
 };
 </script>

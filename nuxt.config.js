@@ -13,6 +13,21 @@ export default {
     ]
   },
 
+  auth: {
+    strategies: {
+      local: {
+        scheme: 'local',
+        endpoints: {
+          login: { url: `${process.env.API_URL}/login`, method: 'post', propertyName: 'token' },
+          user: { url: `${process.env.API_URL}/user`, method: 'get', propertyName: 'user' },
+          logout: { url: `${process.env.API_URL}/logout`, method: 'post' }
+        },
+        tokenType: 'bearer', // The type of token (e.g., 'bearer' for JWT)
+        autoFetchUser: true, // Automatically fetch user data after login
+      }
+    }
+  },
+
   server: {
     host: '0.0.0.0',
     port: 3000
@@ -33,7 +48,8 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -41,13 +57,15 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
+    'cookie-universal-nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: `${process.env.API_URL}`
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

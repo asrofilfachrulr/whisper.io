@@ -4,26 +4,18 @@
       class="flex w-full h-screen items-center justify-center relative min-h-fit"
       id="login-page-div"
     >
-      <AlertError
+      <AlertGeneral
+        v-if="checkMessage()"
         :class="'absolute top-8 left-auto right-auto'"
         :message="message"
-        @closeAlert="message = ''"
+        @closeAlert="resetMessage"
       />
       <div
         class="card w-full sm:w-96 text-neutral-content px-2 py-1 backdrop-blur-3xl bg-indigo-800/40 rounded-none md:rounded-md"
       >
         <div class="card-body items-center text-center">
           <div class="card-title text-center mb-4">Create a New Account</div>
-          <div class="form-control w-full max-w-xs">
-            <div class="mb-4">
-              <label class="label">
-                <span class="label-text">Username</span>
-              </label>
-              <input
-                type="text"
-                class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
-              />
-            </div>
+          <form class="form-control w-full max-w-xs" @submit.prevent="register">
             <div class="mb-4">
               <label class="label">
                 <span class="label-text">Email</span>
@@ -31,6 +23,20 @@
               <input
                 type="text"
                 class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+                required
+                autofocus
+                v-model="email"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="label">
+                <span class="label-text">Full Name</span>
+              </label>
+              <input
+                type="text"
+                class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+                required
+                v-model="fullName"
               />
             </div>
             <label class="label">
@@ -39,15 +45,17 @@
             <input
               type="password"
               class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+              required
+              v-model="password"
             />
-          </div>
-          <div class="card-actions justify-end mt-8 w-full">
-            <NuxtLink class="w-full" to="/home">
-              <ButtonSolid :class="'btn-primary w-full'">Register</ButtonSolid>
-            </NuxtLink>
-          </div>
-          <div class="divider"></div>
-          <ButtonSolid :class="'bg-red-600 hover:bg-red-800 text-white w-full'">
+            <div class="card-actions justify-end mt-8 w-full">
+              <ButtonSolid :class="'btn-primary w-full'" :type="'submit'"
+                >Register</ButtonSolid
+              >
+            </div>
+          </form>
+          <div class="divider">OR</div>
+          <!-- <ButtonSolid :class="'bg-red-600 hover:bg-red-800 text-white w-full'">
             <div class="inline-flex justify-between w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +71,7 @@
               </svg>
               <span class="flex-grow">Register with Google</span>
             </div>
-          </ButtonSolid>
+          </ButtonSolid> -->
           <span class="mx-auto w-full mt-4 text-sm">
             <NuxtLink
               to="/login"
@@ -79,13 +87,20 @@
 </template>
 
 <script>
-import { reactive } from "vue";
 export default {
   transition: {
     name: "fade",
   },
-  data: function () {
-    return { message: "" };
+  data() {
+    return {
+      message: {
+        content: "",
+        type: "",
+      },
+      email: "",
+      fullName: "",
+      password: "",
+    };
   },
   head() {
     return {
@@ -99,6 +114,45 @@ export default {
       ],
     };
   },
+  methods: {
+    async register() {
+      try {
+        console.log("registering..");
+        const response = await this.$axios.post("/register", {
+          email: this.email,
+          full_name: this.fullName,
+          password: this.password,
+        });
+
+        console.log("response register: ", response);
+
+        // After successful registration
+        this.$router.push({
+          path: "/login",
+          query: { registrationSuccess: true },
+        });
+      } catch (error) {
+        this.setMessage(`registing failed: ${error}`, "error");
+      }
+    },
+    resetMessage() {
+      this.message = {
+        content: "",
+        type: "",
+      };
+    },
+    setMessage(content, type) {
+      this.message = {
+        content,
+        type,
+      };
+    },
+    checkMessage() {
+      if (this.message.content != "" && this.message.type != "") return true;
+      return false;
+    },
+  },
+  middleware: "login",
 };
 </script>
 

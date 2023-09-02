@@ -1,7 +1,7 @@
 <template>
   <div
-    class="alert alert-error rounded-md w-10/12 text-sm sm:text-base h-fit sm:w-96 md:h-fit z-50"
-    :class="message ? 'grid' : 'hidden'"
+    class="alert rounded-md w-10/12 text-sm sm:text-base h-fit sm:w-96 md:h-fit z-50 grid"
+    :class="`alert-${message.type}`"
     style="grid-template-columns: 1fr 10fr 1fr"
   >
     <svg
@@ -17,7 +17,7 @@
         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
-    <span>{{ message }}</span>
+    <span>{{ message.content }}</span>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
