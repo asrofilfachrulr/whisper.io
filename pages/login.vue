@@ -122,8 +122,6 @@ export default {
           },
         });
 
-        console.log(response);
-
         const token = response.data.token;
         this.$cookies.set("jwt-token", token, { path: "/" });
 
@@ -131,7 +129,6 @@ export default {
       } catch (error) {
         console.log(error);
         this.setMessage(`login failed: ${error}`, "error");
-        console.log(this.message);
       }
     },
     resetMessage() {
@@ -147,7 +144,6 @@ export default {
       };
     },
     checkMessage() {
-      console.log("check");
       if (this.message.content != "" && this.message.type != "") return true;
       return false;
     },
