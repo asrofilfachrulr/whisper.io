@@ -109,12 +109,6 @@ export default {
   methods: {
     async login() {
       try {
-        console.log(`
-        Testing process environment:
-        1. API_URL: ${process.env.API_URL}
-        2. BASE_URL: ${process.env.BASE_URL}
-        `);
-
         const response = await this.$auth.loginWith("local", {
           data: {
             email: this.email,
