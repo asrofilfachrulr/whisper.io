@@ -116,6 +116,12 @@ export default {
           },
         });
 
+        console.log(`
+        Testing process environment:
+        1. API_URL: ${process.env.API_URL}
+        2. BASE_URL: ${process.env.BASE_URL}
+        `);
+
         console.log(response);
 
         const token = response.data.token;
