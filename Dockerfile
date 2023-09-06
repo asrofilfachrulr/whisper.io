@@ -13,7 +13,6 @@ RUN npm install
 # Copy the rest of the Nuxt.js app source code to the container's working directory
 COPY . .
 
-# Build the Nuxt.js app
 RUN npm run build
 
 # Expose the port that the Nuxt.js app will run on
