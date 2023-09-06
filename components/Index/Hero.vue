@@ -19,7 +19,7 @@
               The Very Number #1 Platform for Secure Messaging and Quick Chat
             </h1>
             <h4 class="md:text-3xl sm:text-2xl text-xl mt-8 font-mono">
-              whisping your
+              whispering your
               <span class="text-violet-700 font-semibold">{{ chTag }}</span
               ><span
                 class="blink transition-opacity ease-in-out text-violet-700"
@@ -28,7 +28,7 @@
             </h4>
             <NuxtLink to="/register"
               ><ButtonOutline :class="'mt-8'"
-                >Start Whisping Now
+                >Start Whispering Now
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
