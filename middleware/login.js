@@ -6,5 +6,6 @@ export default function ({ app, redirect }) {
     return redirect('/home'); // Redirect to the login page if not authenticated
   } else {
     console.log("[MIDDLEWARE: INFO] you dont have token")
+    console.log(`[DEBUG: ENV] process.env: ${process.env}`)
   }
 }
