@@ -4,9 +4,6 @@ FROM node:20.5-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-RUN --mount=type=secret,id=API_URL \
-    export API_URL=$(cat /run/secrets/API_URL)
-
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
