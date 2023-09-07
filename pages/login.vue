@@ -109,8 +109,6 @@ export default {
   methods: {
     async login() {
       try {
-        console.log(`apiUrl: ${this.$config.apiUrl}`);
-
         const response = await this.$auth.loginWith("local", {
           data: {
             email: this.email,

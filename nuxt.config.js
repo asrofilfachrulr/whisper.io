@@ -14,18 +14,14 @@ export default {
     ]
   },
 
-  publicRuntimeConfig: {
-      apiUrl: process.env.API_URL
-  },
-
   auth: {
     strategies: {
       local: {
         scheme: 'local',
         endpoints: {
-          login: { url: `${this.$config.apiUrl}/login`, method: 'post', propertyName: 'token' },
-          user: { url: `${this.$config.apiUrl}/user`, method: 'get', propertyName: 'user' },
-          logout: { url: `${this.$config.apiUrl}/logout`, method: 'post' }
+          login: { url: `${process.env.API_URL}/login`, method: 'post', propertyName: 'token' },
+          user: { url: `${process.env.API_URL}/user`, method: 'get', propertyName: 'user' },
+          logout: { url: `${process.env.API_URL}/logout`, method: 'post' }
         },
         tokenType: 'bearer', // The type of token (e.g., 'bearer' for JWT)
         autoFetchUser: true, // Automatically fetch user data after login
@@ -69,7 +65,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: `${this.$config.apiUrl}`
+    baseURL: `${process.env.API_URL}`
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
