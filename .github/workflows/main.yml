@@ -26,7 +26,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_TAG }}
-          build-args: API_URL=${{ secrets.API_URL }}
+          build-args: API_URL_ARG=${{ secrets.API_URL }}
 
   deploy-to-vm:
     needs: build-and-push-docker-image
