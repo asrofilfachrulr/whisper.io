@@ -4,6 +4,9 @@ FROM node:20.5-slim
 # Set the working directory inside the container
 WORKDIR /app
 
+ARG API_URL_ARG
+ENV API_URL $API_URL_ARG
+
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
@@ -18,4 +21,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Command to start the Nuxt.js app
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
