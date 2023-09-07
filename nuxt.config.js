@@ -19,10 +19,7 @@ export default {
       local: {
         scheme: 'local',
         endpoints: {
-          login: { url: `${function(){
-            console.log(`\n\n\nPROCESS ENV OBJECT ON NUXT CONFIG JS: ${JSON.stringify(process.env)}\n\n\n`)
-            return process.env.API_URL
-          }()}/login`, method: 'post', propertyName: 'token' },
+          login: { url: `${process.env.API_URL}/login`, method: 'post', propertyName: 'token' },
           user: { url: `${process.env.API_URL}/user`, method: 'get', propertyName: 'user' },
           logout: { url: `${process.env.API_URL}/logout`, method: 'post' }
         },
