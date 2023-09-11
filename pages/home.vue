@@ -4,9 +4,9 @@
       <span class="mb-4">USER HOME PAGE</span>
       <CardPlain
         :item="{
-          title: `Hello, ${$auth.user.fullName}`,
+          title: `Hello, ${$auth.user.full_name}`,
           description: `You successfuly logged with e-mail ${$auth.user.email}. 
-          User-ID: ${$auth.user.userId}`,
+          User-ID: ${$auth.user.id}`,
         }"
       >
       </CardPlain>

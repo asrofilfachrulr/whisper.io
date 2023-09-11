@@ -17,12 +17,12 @@
           <div class="card-title text-center mb-4">Login to Your Account</div>
           <form class="form-control w-full max-w-xs" @submit.prevent="login">
             <label class="label">
-              <span class="label-text">Email</span>
+              <span class="label-text">Email or Username</span>
             </label>
             <input
               type="text"
               class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
-              v-model="email"
+              v-model="identifier"
               autofocus
               required
             />
@@ -90,7 +90,7 @@ export default {
         content: "Registration succeed, please login",
         type: "info",
       },
-      email: "",
+      identifier: "",
       password: "",
     };
   },
@@ -111,7 +111,7 @@ export default {
       try {
         const response = await this.$auth.loginWith("local", {
           data: {
-            email: this.email,
+            identifier: this.identifier,
             password: this.password,
           },
         });
