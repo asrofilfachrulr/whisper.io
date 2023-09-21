@@ -1,19 +1,22 @@
 <template>
   <div class="index relative">
-    <main class="h-screen w-screen flex flex-col justify-center items-center">
-      <span class="mb-4">USER HOME PAGE</span>
-      <CardPlain
-        :item="{
-          title: `Hello, ${$auth.user.full_name}`,
-          description: `You successfuly logged with e-mail ${$auth.user.email}. 
-          User-ID: ${$auth.user.id}`,
-        }"
-      >
-      </CardPlain>
-    </main>
     <ButtonOutline :class="'absolute top-4 right-4'" @click="logout">
       Logout
     </ButtonOutline>
+    <main
+      class="h-screen w-screen flex flex-col justify-center items-center relative"
+    >
+      <span class="mb-4 absolute bottom-0 right-4 text-slate-100 italic text-sm"
+        >logged as {{ $auth.user.full_name }} ({{ $auth.user.id }}) <br />
+        with email: {{ $auth.user.email }}</span
+      >
+      <HomeContainer>
+        <div class="flex h-full w-full">
+          <HomeSidebar />
+          <HomeContent />
+        </div>
+      </HomeContainer>
+    </main>
   </div>
 </template>
 
@@ -31,11 +34,13 @@ export default {
       ],
     };
   },
-  middleware: "home",
+  data() {
+    return {};
+  },
+  middleware: ["auth"],
   methods: {
     logout() {
-      this.$cookies.remove("jwt-token");
-      this.$router.push("/");
+      this.$auth.logout();
     },
   },
 };

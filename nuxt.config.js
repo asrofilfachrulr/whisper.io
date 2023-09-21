@@ -26,6 +26,9 @@ export default {
         tokenType: 'bearer', // The type of token (e.g., 'bearer' for JWT)
         autoFetchUser: true, // Automatically fetch user data after login
       }
+    },
+    redirect: {
+      home: '/home'
     }
   },
 
@@ -41,6 +44,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/socket.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,12 +58,10 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
