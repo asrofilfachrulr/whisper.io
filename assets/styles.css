@@ -50,3 +50,43 @@ section:hover .section-title::before {
 img, svg {
   display: inline-block !important;
 }
+
+.hide-scrollbar {
+  overflow: hidden scroll;
+  scroll-behavior: smooth;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  width: 0px;
+  display: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar:hover {
+  width: 0px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: transparent;
+}
+
+.hide-scrollbar {
+  scrollbar-width: 0px; /* "auto" or "thin" can be used */
+  scrollbar-color: transparent transparent; /* thumb and track color */
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: transparent;
+}
+
+.spacer-vertical {
+  min-height: 3rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

@@ -1,14 +1,14 @@
 <template>
   <div
-    class="flex flex-col h-full w-auto p-4 overflow-hidden relative home-sidebar"
+    class="flex flex-col h-full overflow-hidden relative home-sidebar"
     style="border-right: 1px solid rgb(64, 65, 66)"
   >
     <div class="upper-menu h-5/6">
-      <div class="tabs sticky top-0 z-20 bg-zinc-800">
+      <div class="tabs bg-zinc-800 h-14 items-center px-4">
         <a
           :class="[
-            'tab tab-md tab-lifted ',
-            sidebarTabCurrent === 'whispers' ? 'tab-active' : '',
+            'tab tab-lifted  text-base',
+            sidebarTabCurrent === 'whispers' ? 'tab-active font-semibold' : '',
           ]"
           @click="changeTabs('whispers')"
         >
@@ -28,8 +28,8 @@
         >
         <a
           :class="[
-            'tab tab-md tab-lifted',
-            sidebarTabCurrent === 'contacts' ? 'tab-active' : '',
+            'tab tab-lifted text-base',
+            sidebarTabCurrent === 'contacts' ? 'tab-active font-semibold' : '',
           ]"
           @click="changeTabs('contacts')"
           ><svg
@@ -48,14 +48,26 @@
         >
       </div>
       <div
-        class="tab-content text-sm flex flex-col gap-4"
+        class="tab-content px-4 hide-scrollbar text-sm flex flex-col gap-4"
         v-if="sidebarTabCurrent === 'whispers'"
       >
-        <p class="mt-2">+ New Whisper</p>
-        <div v-for="i in 3" :key="i">
-          <p>
+        <div v-for="i in 10" :key="i">
+          <p
+            :class="[
+              !dummies[i - 1].isRead
+                ? 'font-bold text-white'
+                : 'text-slate-50/90',
+            ]"
+          >
             {{ dummies[i - 1].full_name }}
-            <span class="text-xs text-slate-200/70 float-right">
+            <span
+              :class="[
+                'text-xs  float-right',
+                !dummies[i - 1].isRead
+                  ? 'font-semibold text-white'
+                  : 'text-slate-200/70',
+              ]"
+            >
               {{
                 `${
                   dummies[i - 1].time.toLocaleTimeString("en-GB").split(":")[0]
@@ -65,19 +77,59 @@
               }}
             </span>
           </p>
-          <p class="text-xs text-slate-50/80 mt-2">
+          <p
+            :class="[
+              'text-xs  mt-2 text-ellipsis whitespace-nowrap overflow-hidden',
+              !dummies[i - 1].isRead
+                ? 'font-bold text-white w-10/12 inline-block'
+                : 'text-slate-50/80',
+            ]"
+          >
             {{ dummies[i - 1].message }}
           </p>
+          <span
+            v-if="!dummies[i - 1].isRead"
+            class="float-right badge badge-primary mt-1"
+          ></span>
           <div class="divider m-0 mt-1 mb-1"></div>
         </div>
+        <div class="spacer-vertical"></div>
       </div>
       <div
-        class="tab-content text-sm flex flex-col gap-4"
-        style="max-height: 100%"
+        class="tab-content px-4 hide-scrollbar text-sm flex flex-col gap-2"
         v-else-if="sidebarTabCurrent === 'contacts'"
       >
-        <a class="mt-2"
-          ><svg
+        <div v-for="(i, k) in dummies" :key="k">
+          <p>{{ i.full_name }}</p>
+          <p class="text-xs italic text-slate-200/70">@{{ i.username }}</p>
+          <div class="divider m-0"></div>
+        </div>
+        <div class="spacer-vertical"></div>
+      </div>
+    </div>
+    <div class="lower-menu h-1/6 pb-4 bg-zinc-800 z-50 relative">
+      <div class="divider m-0"></div>
+      <div class="flex flex-col gap-4 justify-end h-full w-full px-4 pb-4">
+        <button class="w-fit text-sm" v-if="sidebarTabCurrent === 'whispers'">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-envelope-plus"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"
+            />
+            <path
+              d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5Z"
+            />
+          </svg>
+          &nbsp; New Whisper
+        </button>
+        <button class="w-fit text-sm" v-if="sidebarTabCurrent === 'contacts'">
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
@@ -93,19 +145,10 @@
               d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"
             />
           </svg>
-          &nbsp; New Contact</a
-        >
-        <div v-for="(i, k) in dummies" :key="k">
-          <p class>{{ i.full_name }}</p>
-          <p class="text-xs italic text-slate-200/70 mt-1">@{{ i.username }}</p>
-          <div class="divider m-0 mt-1 mb-1"></div>
-        </div>
-      </div>
-    </div>
-    <div class="lower-menu h-1/6 pb-4">
-      <div class="flex flex-col gap-4 justify-end h-full w-full">
-        <a class="text-sm"
-          ><svg
+          &nbsp; New Contact
+        </button>
+        <button class="text-sm w-fit">
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
@@ -118,10 +161,10 @@
               d="M0 10.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1H3V1.5a.5.5 0 0 0-1 0V10H.5a.5.5 0 0 0-.5.5ZM2.5 12a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5Zm3-6.5A.5.5 0 0 0 6 6h1.5v8.5a.5.5 0 0 0 1 0V6H10a.5.5 0 0 0 0-1H6a.5.5 0 0 0-.5.5ZM8 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2A.5.5 0 0 0 8 1Zm3 9.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1H14V1.5a.5.5 0 0 0-1 0V10h-1.5a.5.5 0 0 0-.5.5Zm2.5 1.5a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5Z"
             />
           </svg>
-          &nbsp; Settings</a
-        >
-        <a class="text-sm"
-          ><svg
+          &nbsp; Settings
+        </button>
+        <button class="text-sm w-fit">
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
@@ -138,8 +181,8 @@
               d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"
             />
           </svg>
-          &nbsp; Logout</a
-        >
+          &nbsp; Logout
+        </button>
       </div>
     </div>
   </div>
@@ -152,64 +195,84 @@ export default {
       sidebarTabCurrent: "whispers",
       dummies: [
         {
+          full_name: "John Seo",
+          time: new Date("2023-09-21T08:00:00Z"),
+          message:
+            "Great! I will work on it and provide you with an update by tomorrow. Thanks for your patience.",
+          username: "johnseo",
+          isRead: false,
+        },
+        {
+          full_name: "Lucky Joao",
+          time: new Date("2023-09-21T08:15:00Z"),
+          message:
+            "Hey there! What's up, bro? I hope you're doing well. It's been a while since we caught up.",
+          username: "luckydraw",
+          isRead: true,
+        },
+        {
+          full_name: "Marcel Glik",
+          time: new Date("2023-09-21T08:30:00Z"),
+          message:
+            "No, I can't make it to the meeting tomorrow. I have another commitment that I can't reschedule.",
+          username: "glikcel",
+          isRead: false,
+        },
+        {
           full_name: "Alice Smith",
-          time: new Date("2023-09-21T12:30:00Z"),
-          message: "Hello there!",
+          time: new Date("2023-09-21T08:45:00Z"),
+          message:
+            "Hello there! I hope you had a fantastic weekend. Let's catch up sometime soon!",
           username: "alicesmith",
+          isRead: true,
         },
         {
           full_name: "Ella Davis",
-          time: new Date("2023-09-21T13:15:00Z"),
-          message: "I'm excited for the weekend!",
+          time: new Date("2023-09-21T09:00:00Z"),
+          message:
+            "I'm really looking forward to the upcoming weekend. I have some exciting plans with friends.",
           username: "elladavis",
+          isRead: false,
         },
         {
           full_name: "David Johnson",
-          time: new Date("2023-09-21T14:20:00Z"),
-          message: "Can you help me with this problem?",
+          time: new Date("2023-09-21T09:15:00Z"),
+          message:
+            "Sure, I'd be happy to help you with that problem. Let's schedule a time to discuss it.",
           username: "davidj",
+          isRead: true,
         },
         {
           full_name: "Sophia Kim",
-          time: new Date("2023-09-21T15:45:00Z"),
-          message: "Good morning, everyone!",
+          time: new Date("2023-09-21T09:30:00Z"),
+          message:
+            "Good morning, everyone! I hope you have a productive day ahead.",
           username: "sophiak",
+          isRead: false,
         },
         {
           full_name: "Oliver Lee",
-          time: new Date("2023-09-21T16:10:00Z"),
-          message: "I love the new features in the update!",
+          time: new Date("2023-09-21T09:45:00Z"),
+          message:
+            "I've been exploring the new features in the latest software update, and they are impressive!",
           username: "oliverl",
+          isRead: true,
         },
         {
           full_name: "Emma Wilson",
-          time: new Date("2023-09-21T17:25:00Z"),
-          message: "Let's meet for coffee later.",
+          time: new Date("2023-09-21T10:00:00Z"),
+          message:
+            "Let's plan to meet for coffee later this week. What day works best for you?",
           username: "emmawilson",
+          isRead: false,
         },
         {
           full_name: "Noah Brown",
-          time: new Date("2023-09-21T18:00:00Z"),
-          message: "Any plans for the weekend?",
+          time: new Date("2023-09-21T10:15:00Z"),
+          message:
+            "I'm thinking of going hiking this weekend. Anyone interested in joining me?",
           username: "noahb",
-        },
-        {
-          full_name: "Mia Garcia",
-          time: new Date("2023-09-21T19:30:00Z"),
-          message: "I'm looking forward to the party!",
-          username: "miag",
-        },
-        {
-          full_name: "Lucas Martinez",
-          time: new Date("2023-09-21T20:15:00Z"),
-          message: "I'll be there in 10 minutes.",
-          username: "lucasm",
-        },
-        {
-          full_name: "Ava Hernandez",
-          time: new Date("2023-09-21T21:05:00Z"),
-          message: "What's for dinner tonight?",
-          username: "avah",
+          isRead: true,
         },
       ],
     };
@@ -231,37 +294,16 @@ export default {
 .tab-content {
   padding-inline-start: 1rem;
   padding-block-start: 1rem;
-  overflow: hidden auto;
+  overflow: hidden scroll;
+  max-height: 100%;
 }
 
 .tab-lifted.tab-active:not(.tab-disabled):not([disabled]) {
   background-color: #350b48;
 }
 
-.tab-content::-webkit-scrollbar {
-  width: 5px;
-}
-
-.tab-content::-webkit-scrollbar-thumb {
-  background-color: #4a1461;
-  border-radius: 5px;
-  height: 50px !important;
-}
-
-.tab-content::-webkit-scrollbar:hover {
-  width: 5px;
-}
-
-.tab-content::-webkit-scrollbar-thumb:hover {
-  background-color: #5e0783;
-}
-
-.tab-content {
-  scrollbar-width: thin; /* "auto" or "thin" can be used */
-  scrollbar-color: #4a1461 rgba(0, 0, 0, 0); /* thumb and track color */
-}
-
-.tab-content::-webkit-scrollbar-thumb:hover {
-  background-color: #5e0783;
+.badge-primary {
+  background-color: var(--clr-accent-lighter) !important;
+  border-color: var(--clr-accent-lighter) !important;
 }
 </style>

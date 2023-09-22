@@ -11,9 +11,15 @@
         with email: {{ $auth.user.email }}</span
       >
       <HomeContainer>
-        <div class="flex h-full w-full">
-          <HomeSidebar />
-          <HomeContent />
+        <div class="h-full w-full overflow-hidden block md:flex flex-nowrap">
+          <HomeSidebar
+            :id="'home-sidebar'"
+            :class="'w-full block md:inline-block md:w-2/6'"
+          />
+          <HomeContentbar
+            :id="'home-contentbar'"
+            :class="'w-full block md:inline-block md:w-4/6'"
+          />
         </div>
       </HomeContainer>
     </main>
