@@ -10,18 +10,12 @@
         >logged as {{ $auth.user.full_name }} ({{ $auth.user.id }}) <br />
         with email: {{ $auth.user.email }}</span
       >
-      <HomeContainer>
+      <Home>
         <div class="h-full w-full overflow-hidden block md:flex flex-nowrap">
-          <HomeSidebar
-            :id="'home-sidebar'"
-            :class="'w-full block md:inline-block md:w-2/6'"
-          />
-          <HomeContentbar
-            :id="'home-contentbar'"
-            :class="'w-full block md:inline-block md:w-4/6'"
-          />
+          <HomeSidebar :id="'home-sidebar'" />
+          <HomeContentbar :id="'home-contentbar'" />
         </div>
-      </HomeContainer>
+      </Home>
     </main>
   </div>
 </template>

@@ -90,3 +90,9 @@ img, svg {
   margin: 0;
   padding: 0;
 }
+
+/* custom daisyui*/
+.badge-primary {
+  background-color: var(--clr-accent-lighter) !important;
+  border-color: var(--clr-accent-lighter) !important;
+}

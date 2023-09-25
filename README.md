@@ -1,4 +1,15 @@
-# template-nuxt
+# Whisper.io  
+
+Simple web chat app with fundamental features and still modern UI
+
+
+# Diagrams  
+
+### Infrastructure App
+
+Top Level Diagram of Technincal Infrastructure
+
+![Diagram](./infra)
 
 ## Build Setup
 
