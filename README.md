@@ -5,11 +5,17 @@ Simple web chat app with fundamental features and still modern UI
 
 # Diagrams  
 
-### Infrastructure App
+### Infrastructure
 
 Top Level Diagram of Technincal Infrastructure
 
-![Diagram](/infra.jpg)
+![Diagram](/MD-assets/infra.jpg)
+
+### App Activity
+
+Top Level Diagram of App Activity
+
+![Diagram](/MD-assets/activity.jpg)
 
 ## Build Setup
 
