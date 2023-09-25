@@ -9,7 +9,7 @@ Simple web chat app with fundamental features and still modern UI
 
 Top Level Diagram of Technincal Infrastructure
 
-![Diagram](./infra)
+![Diagram](/infra.jpg)
 
 ## Build Setup
 
