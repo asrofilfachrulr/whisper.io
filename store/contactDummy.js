@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export const state = () => ({
-  contacts:[
+  items:[
     {
-      id: uuidv4(),
+      id: 'user-456',
       full_name: "John Seo",
       time: new Date("2023-09-21T08:00:00Z"),
       message:
@@ -95,10 +95,6 @@ export const state = () => ({
   ]
 })
 
-export const mutations = {
-  // Define mutations to update chat data if needed
-}
-
-export const actions = {
-  // Define actions to interact with the chat data if needed
+export const getters = {
+  items: (state) => state.items
 }

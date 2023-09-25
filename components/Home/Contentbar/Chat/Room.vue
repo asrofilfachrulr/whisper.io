@@ -5,20 +5,23 @@
     style="max-height: 80%; scroll-behavior: unset"
   >
     <div
-      v-for="(item, i) in $store.getters['activity/chat'].messages"
+      v-for="(message, i) in messages"
       :key="i"
-      :class="['chat my-4', item.sender === userId ? 'chat-end' : 'chat-start']"
+      :class="[
+        'chat my-4',
+        message.sender === userId ? 'chat-end' : 'chat-start',
+      ]"
     >
       <div
         :class="[
           'chat-bubble text-sm text-white font-medium',
-          item.sender === userId
+          message.sender === userId
             ? 'chat-bubble-primary'
             : 'chat-bubble-secondary',
         ]"
         style="max-width: 40ch"
       >
-        {{ item.content }}
+        {{ message.content }}
       </div>
     </div>
   </div>
@@ -26,9 +29,12 @@
 
 <script>
 export default {
-  props: {
-    userId: {
-      type: String,
+  computed: {
+    userId() {
+      return this.$auth.user.id;
+    },
+    messages() {
+      return this.$store.getters["chats/selectedChat"].messages;
     },
   },
   mounted() {

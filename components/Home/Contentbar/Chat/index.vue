@@ -1,8 +1,8 @@
 <template>
   <div class="w-full h-full relative">
-    <template v-if="chat_isSelectedAny">
+    <template v-if="chatId">
       <ChatTopbar />
-      <ChatRoom :userId="userId" />
+      <ChatRoom />
       <div
         class="absolute bottom-4 w-full flex justify-center items-center gap-4"
       >
@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       textAreaChat: "",
-      userId: "user-123",
     };
   },
   methods: {
@@ -50,12 +49,12 @@ export default {
         this.$refs.textarea_chat.scrollHeight + "px";
     },
     handleEscapeKey(event) {
-      if (event.keyCode === 27) this.$store.commit("activity/UNSELECT_CHAT");
+      if (event.keyCode === 27) this.$store.commit("chats/UNSELECT_CHAT");
     },
   },
   computed: {
-    chat_isSelectedAny() {
-      return this.$store.getters["activity/chat_isSelectedAny"];
+    chatId() {
+      return this.$store.getters["chats/selectedChatId"];
     },
   },
   mounted() {

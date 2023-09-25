@@ -1,23 +1,22 @@
 <template>
   <div class="tab-content px-4 hide-scrollbar text-sm flex flex-col gap-4">
-    <div class="cursor-pointer" @click="clickChat(i)" v-for="i in 10" :key="i">
-      <p
-        :class="[
-          !dummies[i - 1].isRead ? 'font-bold text-white' : 'text-slate-50/90',
-        ]"
-      >
-        {{ dummies[i - 1].full_name }}
+    <div
+      class="cursor-pointer"
+      @click="clickChat(i)"
+      v-for="(chat, i) in chats"
+      :key="i"
+    >
+      <p :class="[!chat.isRead ? 'font-bold text-white' : 'text-slate-50/90']">
+        {{ chat.full_name }}
         <span
           :class="[
             'text-xs  float-right',
-            !dummies[i - 1].isRead
-              ? 'font-semibold text-white'
-              : 'text-slate-200/70',
+            !chat.isRead ? 'font-semibold text-white' : 'text-slate-200/70',
           ]"
         >
           {{
-            `${dummies[i - 1].time.toLocaleTimeString("en-GB").split(":")[0]}:${
-              dummies[i - 1].time.toLocaleTimeString("en-GB").split(":")[1]
+            `${chat.time.toLocaleTimeString("en-GB").split(":")[0]}:${
+              chat.time.toLocaleTimeString("en-GB").split(":")[1]
             }`
           }}
         </span>
@@ -25,15 +24,15 @@
       <p
         :class="[
           'text-xs  mt-2 text-ellipsis whitespace-nowrap overflow-hidden',
-          !dummies[i - 1].isRead
+          !chat.isRead
             ? 'font-bold text-white w-10/12 inline-block'
             : 'text-slate-50/80',
         ]"
       >
-        {{ dummies[i - 1].message }}
+        {{ chat.messages[chat.messages.length - 1].content }}
       </p>
       <span
-        v-if="!dummies[i - 1].isRead"
+        v-if="!chat.isRead"
         class="float-right badge badge-primary mt-1"
       ></span>
       <div class="divider m-0 mt-1 mb-1"></div>
@@ -44,15 +43,15 @@
 
 <script>
 export default {
-  props: ["dummies"],
+  computed: {
+    chats() {
+      return this.$store.getters["chats/items"];
+    },
+  },
   methods: {
     clickChat(idx) {
-      console.log("[EVENT] select chat");
-      this.$store.commit("activity/SELECT_CHAT", {
-        id: this.dummies[idx - 1].id,
-        name: this.dummies[idx - 1].full_name,
-        lastSeen: "Yesterday at 08:46",
-        messages: this.$store.getters["chatDummy/messages"],
+      this.$store.commit("chats/SELECT_CHAT", {
+        id: this.chats[idx].id,
       });
     },
   },

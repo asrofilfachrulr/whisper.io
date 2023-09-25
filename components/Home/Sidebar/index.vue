@@ -8,14 +8,8 @@
         :sidebarTabCurrent="sidebarTabCurrent"
         @changeTabs="changeTabs"
       />
-      <HomeSidebarTabWhispers
-        :dummies="dummies"
-        v-if="sidebarTabCurrent === 'whispers'"
-      />
-      <HomeSidebarTabContacts
-        :dummies="dummies"
-        v-else-if="sidebarTabCurrent === 'contacts'"
-      />
+      <HomeSidebarTabWhispers v-if="sidebarTabCurrent === 'whispers'" />
+      <HomeSidebarTabContacts v-else-if="sidebarTabCurrent === 'contacts'" />
     </div>
     <div class="lower-menu h-1/6 pb-4 bg-zinc-800 z-50 relative">
       <div class="divider m-0"></div>
@@ -30,11 +24,6 @@ export default {
     return {
       sidebarTabCurrent: "whispers",
     };
-  },
-  computed: {
-    dummies() {
-      return this.$store.state.contactDummy.contacts;
-    },
   },
   methods: {
     changeTabs(current) {

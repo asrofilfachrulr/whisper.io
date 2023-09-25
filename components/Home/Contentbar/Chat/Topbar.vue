@@ -5,19 +5,40 @@
   >
     <p class="text-base font-semibold relative">
       <span
+        v-if="lastSeen != 'online'"
         class="float-left badge badge-outline absolute top-1/2 left-0 h-3 w-3 p-0 -translate-x-0 -translate-y-1/2"
       ></span>
-      &nbsp;&nbsp;&nbsp;&nbsp; {{ chat.name }}
+      <span
+        v-else
+        class="float-left badge badge-accent absolute top-1/2 left-0 h-3 w-3 p-0 -translate-x-0 -translate-y-1/2"
+      ></span>
+      &nbsp;&nbsp;&nbsp;&nbsp; {{ senderName }}
     </p>
-    <span class="text-xs mt-1 text-slate-100/70">{{ chat.lastSeen }}</span>
+    <span class="text-xs mt-1 text-slate-100/70">{{ lastSeen }}</span>
   </div>
 </template>
 
 <script>
 export default {
   computed: {
-    chat() {
-      return this.$store.getters["activity/chat"];
+    userId() {
+      return this.$auth.user.id;
+    },
+    chatId() {
+      return this.$store.getters["chats/selectedChatId"];
+    },
+    senderName() {
+      return this.$store.getters["chats/fullNameByChatId"](this.chatId);
+    },
+    lastSeen() {
+      const participants = this.$store.getters["chats/participantsByChatId"](
+        this.chatId
+      );
+
+      const senderId =
+        participants[0] !== this.userId ? participants[0] : participants[1];
+
+      return this.$store.getters["contacts/lastSeenById"](senderId);
     },
   },
 };
