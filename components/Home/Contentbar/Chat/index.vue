@@ -88,6 +88,17 @@ export default {
         this.$refs.textarea_chat.blur();
         this.$refs.textarea_chat.focus();
       });
+
+      this.$socket.emit("send-message", message);
+    },
+    receiveMessage() {
+      this.$socket.on("receive-message", (msg) => {
+        this.$store.commit("chats/PUSH_MESSAGE", {
+          sender: "user-456",
+          content: msg.content,
+          time: msg.time,
+        });
+      });
     },
     handleEscapeKey(event) {
       if (event.keyCode === 27) this.$store.commit("chats/UNSELECT_CHAT");
@@ -105,6 +116,7 @@ export default {
   },
   mounted() {
     document.addEventListener("keydown", this.handleEscapeKey);
+    this.receiveMessage();
   },
   beforeDestroy() {
     document.removeEventListener("keydown", this.handleEscapeKey);

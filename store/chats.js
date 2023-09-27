@@ -35,6 +35,13 @@ export const mutations = {
         break
       }
   },
+  PUSH_MESSAGE_BY_ID(state, {id, msg}){
+    for(let i = 0; i < state.items.length; i++)
+      if(state.items[i].id === id){
+        state.items[i].messages.push(msg)
+        break
+      }
+  },
   UNSELECT_CHAT(state){
     state.selectedChatId = ''
   },
