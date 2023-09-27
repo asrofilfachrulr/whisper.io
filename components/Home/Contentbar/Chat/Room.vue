@@ -15,14 +15,26 @@
     >
       <div
         :class="[
-          'chat-bubble text-sm text-white font-medium',
-          message.sender === userId
+          'chat-bubble text-sm text-white font-medium relative',
+          isLastMessageAndLoading(i)
+            ? ''
+            : message.sender === userId
             ? 'chat-bubble-primary'
             : 'chat-bubble-secondary',
         ]"
         style="max-width: 40ch"
       >
-        <p class="whitespace-pre-line">{{ message.content }}</p>
+        <span
+          v-if="isLastMessageAndLoading(i)"
+          :class="['loading loading-spinner loading-xs absolute bottom-2', message.sender === userId ? '-left-8' : '-right-8']"
+        ></span>
+        <p
+          :class="[
+            'whitespace-pre-line',
+            isLastMessageAndLoading(i) ? 'opacity-60' : '',
+          ]"
+        >{{ message.content }}
+        </p>
       </div>
     </div>
   </div>
@@ -30,6 +42,7 @@
 
 <script>
 export default {
+  props: ["loadingState"],
   computed: {
     userId() {
       return this.$auth.user.id;
@@ -44,6 +57,9 @@ export default {
         this.$refs.chatroom.scrollTop = this.$refs.chatroom.scrollHeight;
       });
     },
+    isLastMessageAndLoading(i){
+      return (i === this.messages.length - 1) && this.loadingState.sendingMsg
+    }
   },
   mounted() {
     this.scrollToBottom();
@@ -56,5 +72,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

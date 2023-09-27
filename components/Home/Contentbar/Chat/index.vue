@@ -2,7 +2,7 @@
   <div class="w-full h-full relative">
     <template v-if="chatId">
       <ChatTopbar />
-      <ChatRoom />
+      <ChatRoom :loadingState="loadingState" />
       <div
         class="absolute bottom-4 w-full flex justify-center items-center gap-4"
       >
@@ -51,7 +51,9 @@ export default {
   data() {
     return {
       textAreaChat: "",
-      isSendingMessage: false,
+      loadingState: {
+        sendingMsg: false,
+      },
     };
   },
   methods: {
@@ -89,7 +91,10 @@ export default {
         this.$refs.textarea_chat.focus();
       });
 
-      this.$socket.emit("send-message", message);
+      this.loadingState.sendingMsg = true;
+      this.$socket.emit("send-message", message, (response) => {
+        if (response.status) this.loadingState.sendingMsg = false;
+      });
     },
     receiveMessage() {
       this.$socket.on("receive-message", (msg) => {
