@@ -13,9 +13,20 @@
           style="min-height: 60px !important; height: 60px; max-height: 200px"
           v-model="textAreaChat"
           @input="textAreaDynamicHeight"
+          @focus="textAreaDynamicHeight"
+          @blur="textAreaDynamicHeight"
+          @keypress.enter.exact="sendMessage"
         ></textarea>
 
-        <button class="btn btn-primary h-5">
+        <button
+          :class="[
+            'btn h-5 btn-primary',
+            isTextAreaEmpty()
+              ? 'btn-disabled opacity-100 cursor-not-allowed'
+              : '',
+          ]"
+          @click="sendMessage"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -40,16 +51,51 @@ export default {
   data() {
     return {
       textAreaChat: "",
+      isSendingMessage: false,
     };
   },
   methods: {
+    isTextAreaEmpty() {
+      // Use a regular expression to match the entire string
+      const whitespaceOrEmptyRegex = /^(\s*|)$/;
+
+      // Test if the string only contains whitespace or is empty
+      return whitespaceOrEmptyRegex.test(this.textAreaChat);
+    },
     textAreaDynamicHeight() {
       this.$refs.textarea_chat.style.height = "auto";
       this.$refs.textarea_chat.style.height =
         this.$refs.textarea_chat.scrollHeight + "px";
     },
+    sendMessage(event) {
+      if (this.isTextAreaEmpty()) return;
+
+      event.preventDefault();
+
+      const message = {
+        sender: this.$auth.user.id,
+        time: new Date(),
+        content: this.textAreaChat.trimEnd(),
+      };
+
+      this.$store.commit("chats/PUSH_MESSAGE", message);
+
+      this.textAreaChat = "";
+
+      // hacky to trigger blur event so height of textarea is adjusted again
+      // but still has the focus again
+      this.$nextTick(() => {
+        this.$refs.textarea_chat.blur();
+        this.$refs.textarea_chat.focus();
+      });
+    },
     handleEscapeKey(event) {
       if (event.keyCode === 27) this.$store.commit("chats/UNSELECT_CHAT");
+    },
+  },
+  watch: {
+    textAreaChat() {
+      this.textAreaDynamicHeight();
     },
   },
   computed: {

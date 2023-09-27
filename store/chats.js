@@ -28,9 +28,9 @@ export const mutations = {
   PUSH_CHAT(state, chat){
     state.items.push(chat)
   },
-  PUSH_MESSAGE(state, {id, msg}){
+  PUSH_MESSAGE(state, msg){
     for(let i = 0; i < state.items.length; i++)
-      if(state.items[i].id === id){
+      if(state.items[i].id === state.selectedChatId){
         state.items[i].messages.push(msg)
         break
       }

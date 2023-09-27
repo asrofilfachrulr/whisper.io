@@ -1,6 +1,7 @@
 <template>
   <div
     ref="chatroom"
+    id="chatroom"
     class="flex-grow basis-auto shrink px-4 hide-scrollbar pt-2"
     style="max-height: 80%; scroll-behavior: unset"
   >
@@ -21,7 +22,7 @@
         ]"
         style="max-width: 40ch"
       >
-        {{ message.content }}
+        <p class="whitespace-pre-line">{{ message.content }}</p>
       </div>
     </div>
   </div>
@@ -37,8 +38,20 @@ export default {
       return this.$store.getters["chats/selectedChat"].messages;
     },
   },
+  methods: {
+    scrollToBottom() {
+      this.$nextTick(() => {
+        this.$refs.chatroom.scrollTop = this.$refs.chatroom.scrollHeight;
+      });
+    },
+  },
   mounted() {
-    this.$refs.chatroom.scrollTop = this.$refs.chatroom.scrollHeight;
+    this.scrollToBottom();
+  },
+  watch: {
+    messages() {
+      this.scrollToBottom();
+    },
   },
 };
 </script>
