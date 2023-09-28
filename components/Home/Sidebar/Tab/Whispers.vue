@@ -29,7 +29,7 @@
             : 'text-slate-50/80',
         ]"
       >
-        {{ chat.messages[chat.messages.length - 1].content }}
+        {{ chat.messages.length ? chat.messages[chat.messages.length - 1].content : '' }}
       </p>
       <span
         v-if="!chat.isRead"

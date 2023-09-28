@@ -1,6 +1,10 @@
 <template>
   <div class="flex flex-col gap-4 justify-end h-full w-full px-4 pb-4">
-    <button class="w-fit text-sm" v-if="sidebarTabCurrent === 'whispers'">
+    <button
+      class="w-fit text-sm"
+      v-if="sidebarTabCurrent === 'whispers'"
+      @click="handleClickNewOptions('new_whisper_modal')"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -18,7 +22,11 @@
       </svg>
       &nbsp; New Whisper
     </button>
-    <button class="w-fit text-sm" v-if="sidebarTabCurrent === 'contacts'">
+    <button
+      class="w-fit text-sm"
+      v-if="sidebarTabCurrent === 'contacts'"
+      @click="handleClickNewOptions('new_contact_modal')"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -79,6 +87,18 @@
 <script>
 export default {
   props: ["sidebarTabCurrent"],
+  methods: {
+    handleClickNewOptions(id) {
+      this.$store.commit("page/home/NEW_EVENT", {
+        name:
+          this.sidebarTabCurrent === "whispers" ? "new-whisper" : "new-contact",
+      });
+      
+      this.$nextTick(() => {
+        document.getElementById(id).showModal()
+      })
+    },
+  },
 };
 </script>
 
