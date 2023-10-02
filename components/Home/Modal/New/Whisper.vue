@@ -88,7 +88,6 @@ export default {
     handleClick(contact) {
       // search for current chat room, otherwise create new then select it
       const participants = [this.$auth.user.id, contact.id];
-
       let chatId =
         this.$store.getters["chats/isAnyChatByParticipants"]([...participants].sort())
 

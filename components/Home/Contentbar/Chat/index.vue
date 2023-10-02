@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   data() {
     return {
@@ -74,8 +76,11 @@ export default {
 
       event.preventDefault();
 
+      const recepientId = this.participants[0] !== this.$auth.user.id ? this.participants[0] : this.participants[1]
+
       const message = {
         sender: this.$auth.user.id,
+        recepient: recepientId,
         time: new Date(),
         content: this.textAreaChat.trimEnd(),
       };
@@ -93,16 +98,8 @@ export default {
 
       this.loadingState.sendingMsg = true;
       this.$socket.emit("send-message", message, (response) => {
+        console.log("[PLUGINS: INFO] Response Status Sending Message: ", response.status)
         if (response.status) this.loadingState.sendingMsg = false;
-      });
-    },
-    receiveMessage() {
-      this.$socket.on("receive-message", (msg) => {
-        this.$store.commit("chats/PUSH_MESSAGE", {
-          sender: "user-456",
-          content: msg.content,
-          time: msg.time,
-        });
       });
     },
     handleEscapeKey(event) {
@@ -118,10 +115,12 @@ export default {
     chatId() {
       return this.$store.getters["chats/selectedChatId"];
     },
+    participants(){
+      return this.$store.getters["chats/participantsByChatId"](this.chatId)
+    }
   },
   mounted() {
     document.addEventListener("keydown", this.handleEscapeKey);
-    this.receiveMessage();
   },
   beforeDestroy() {
     document.removeEventListener("keydown", this.handleEscapeKey);

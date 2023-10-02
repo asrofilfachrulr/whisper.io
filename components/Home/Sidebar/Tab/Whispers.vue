@@ -23,7 +23,7 @@
       </p>
       <p
         :class="[
-          'text-xs  mt-2 text-ellipsis whitespace-nowrap overflow-hidden',
+          'text-xs  mt-2 text-ellipsis whitespace-nowrap overflow-hidden min-h-[16px]',
           !chat.isRead
             ? 'font-bold text-white w-10/12 inline-block'
             : 'text-slate-50/80',

@@ -1,99 +1,53 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export const state = () => ({
-  items:[
+  items: [
     {
-      id: 'user-456',
-      full_name: "John Seo",
-      time: new Date("2023-09-21T08:00:00Z"),
-      message:
-        "Great! I will work on it and provide you with an update by tomorrow. Thanks for your patience.",
-      username: "johnseo",
-      isRead: false,
+      id: '@id_dummy01',
+      username: 'anya',
+      full_name: 'Anya Sebastian',
     },
     {
-      id: uuidv4(),
-      full_name: "Lucky Joao",
-      time: new Date("2023-09-21T08:15:00Z"),
-      message:
-        "Hey there! What's up, bro? I hope you're doing well. It's been a while since we caught up.",
-      username: "luckydraw",
-      isRead: true,
+      id: '@id_dummy02',
+      username: 'fachri',
+      full_name: 'Joao Fachri',
     },
     {
-      id: uuidv4(),
-      full_name: "Marcel Glik",
-      time: new Date("2023-09-21T08:30:00Z"),
-      message:
-        "No, I can't make it to the meeting tomorrow. I have another commitment that I can't reschedule.",
-      username: "glikcel",
-      isRead: false,
+      id: '@id_dummy03',
+      username: 'john',
+      full_name: 'John Lao',
     },
     {
-      id: uuidv4(),
-      full_name: "Alice Smith",
-      time: new Date("2023-09-21T08:45:00Z"),
-      message:
-        "Hello there! I hope you had a fantastic weekend. Let's catch up sometime soon!",
-      username: "alicesmith",
-      isRead: true,
+      id: '@id_dummy04',
+      username: 'doe',
+      full_name: 'Doe Mama',
     },
     {
-      id: uuidv4(),
-      full_name: "Ella Davis",
-      time: new Date("2023-09-21T09:00:00Z"),
-      message:
-        "I'm really looking forward to the upcoming weekend. I have some exciting plans with friends.",
-      username: "elladavis",
-      isRead: false,
+      id: '@id_dummy05',
+      username: 'budi',
+      full_name: 'Budi Charles',
     },
     {
-      id: uuidv4(),
-      full_name: "David Johnson",
-      time: new Date("2023-09-21T09:15:00Z"),
-      message:
-        "Sure, I'd be happy to help you with that problem. Let's schedule a time to discuss it.",
-      username: "davidj",
-      isRead: true,
+      id: '@id_dummy06',
+      username: 'andi',
+      full_name: 'Andi Coal',
     },
     {
-      id: uuidv4(),
-      full_name: "Sophia Kim",
-      time: new Date("2023-09-21T09:30:00Z"),
-      message:
-        "Good morning, everyone! I hope you have a productive day ahead.",
-      username: "sophiak",
-      isRead: false,
+      id: '@id_dummy07',
+      username: 'seto',
+      full_name: 'Seto de Francis',
     },
     {
-      id: uuidv4(),
-      full_name: "Oliver Lee",
-      time: new Date("2023-09-21T09:45:00Z"),
-      message:
-        "I've been exploring the new features in the latest software update, and they are impressive!",
-      username: "oliverl",
-      isRead: true,
+      id: '@id_dummy08',
+      username: 'messi',
+      full_name: 'Messi la Rodriguez',
     },
     {
-      id: uuidv4(),
-      full_name: "Emma Wilson",
-      time: new Date("2023-09-21T10:00:00Z"),
-      message:
-        "Let's plan to meet for coffee later this week. What day works best for you?",
-      username: "emmawilson",
-      isRead: false,
+      id: '@id_dummy09',
+      username: 'ronaldo',
+      full_name: 'Ronaldo de Julia',
     },
-    {
-      id: uuidv4(),
-      full_name: "Noah Brown",
-      time: new Date("2023-09-21T10:15:00Z"),
-      message:
-        "I'm thinking of going hiking this weekend. Anyone interested in joining me?",
-      username: "noahb",
-      isRead: true,
-    },
-  ]
-})
+  ],
+});
+
 
 export const getters = {
   items: (state) => state.items
