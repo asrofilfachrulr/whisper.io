@@ -11,9 +11,11 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: '/favicon.ico' }
-    ]
+    ],
+    htmlAttrs: {
+      'data-theme': 'dark'
+    }
   },
-
   auth: {
     strategies: {
       local: {
