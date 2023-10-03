@@ -7,7 +7,7 @@
       :key="i"
     >
       <p :class="[!chat.isRead ? 'font-bold text-white' : 'text-slate-50/90']">
-        {{ chat.full_name }}
+        {{ senderName(chat.id) }}
         <span
           :class="[
             'text-xs  float-right',
@@ -49,6 +49,11 @@ export default {
     },
   },
   methods: {
+    senderName(chatId){
+      const senderId = this.$store.getters["chats/senderIdByChatId"](this.$auth.user.id, chatId)
+      const sender = this.$store.getters["contacts/contactById"](senderId)
+      return sender ? sender.full_name : senderId;
+    },
     clickChat(idx) {
       this.$store.commit("chats/SELECT_CHAT", {
         id: this.chats[idx].id,

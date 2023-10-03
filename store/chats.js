@@ -32,10 +32,10 @@ export const mutations = {
     state.items.push(chat)
   },
 
-  // push message to existing chat by sender id on msg obj
+  // push message to current selected chat
   PUSH_MESSAGE(state, msg) {
     for (let i = 0; i < state.items.length; i++)
-      if (state.items[i].participants[0] === msg.sender || state.items[i].participants[1] === msg.sender) {
+      if (state.items[i].id === state.selectedChatId) {
         state.items[i].messages.push(msg)
         break
       }
@@ -76,6 +76,22 @@ export const getters = {
     for (let i = 0; i < state.items.length; i++)
       if (state.items[i].id === id)
         return state.items[i].participants
+  },
+
+  senderIdOnSelectedChat: (state) => (userId) => {
+    for (let i = 0; i < state.items.length; i++)
+      if (state.items[i].id === state.selectedChatId){
+        const participants = state.items[i].participants
+        return participants[0] !== userId ? participants[0] : participants[1]
+      }
+  },
+
+  senderIdByChatId: (state) => (userId, chatId) => {
+    for (let i = 0; i < state.items.length; i++)
+      if (state.items[i].id === chatId){
+        const participants = state.items[i].participants
+        return participants[0] !== userId ? participants[0] : participants[1]
+      }
   },
 
   selectedChatId: (state) => state.selectedChatId,

@@ -4,9 +4,9 @@
       class="modal-box w-11/12 md:w-6/12 lg:w-5/12 max-w-lg max-h-[350px] overflow-hidden flex flex-col gap-5 min-h-[350px]"
     >
       <h3 class="font-bold text-lg">New Contact</h3>
-      <p class="py-4">Search by id</p>
+      <p class="py-4">Search by id or username</p>
       <div class="flex gap-4 relative">
-        <input type="text" v-model="identifier" class="input w-3/4" />
+        <input id="identifier-searchbox" type="text" v-model="identifier" class="input w-3/4" placeholder="@john_doe, johndoe"/>
         <ButtonSolid
           @click="handleSearch"
           :class="['w-1/4 btn-accent', isLoading ? 'btn-disabled' : '', identifier.match(/\S/g) ? '' : 'btn-disabled']"
@@ -58,7 +58,7 @@ export default {
       },
       identifier: "",
       isLoading: false,
-      retrievedContact: {}
+      retrievedContact: {},
     };
   },
   methods: {
@@ -71,6 +71,11 @@ export default {
         return
       }
 
+      if(this.identifier.includes('@') && (this.identifier === this.$auth.user.id)){
+        this.error = {status: true, msg: 'cannot add yourself as friend, find somebody else!'}
+        return
+      }
+      
       let response;      
       
       try {
@@ -93,7 +98,7 @@ export default {
 
       const user = response.data.user
       this.retrievedContact = {
-        id: this.identifier,
+        id: user.id,
         last_seen: 'online',
         full_name: user.full_name,
         username: user.username,
@@ -117,5 +122,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+::-webkit-input-placeholder {
+  font-size: 0.85em;
+}
+::-moz-placeholder {
+  font-size: 0.85em;
+}
 </style>

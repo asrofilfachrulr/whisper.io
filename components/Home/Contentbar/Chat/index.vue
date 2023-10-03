@@ -85,12 +85,16 @@ export default {
         content: this.textAreaChat.trimEnd(),
       };
 
-      this.$store.commit("chats/PUSH_MESSAGE", message);
+      this.$store.commit("chats/PUSH_MESSAGE", {
+        sender: message.sender,
+        time: message.time,
+        content: message.content
+      });
 
       this.textAreaChat = "";
 
-      // hacky to trigger blur event so height of textarea is adjusted again
-      // but still has the focus again
+      // trigger blur event so height of textarea is adjusted again
+      // but still has the focus again after that
       this.$nextTick(() => {
         this.$refs.textarea_chat.blur();
         this.$refs.textarea_chat.focus();

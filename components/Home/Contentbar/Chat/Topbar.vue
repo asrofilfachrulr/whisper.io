@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col justify-start w-full min-h-12 bg-zinc-800 relative z-50 p-4 drop-shadow-2xl py-2 flex-grow-0 basis-auto shrink"
+    class="flex flex-col justify-start w-full min-h-[65px] bg-zinc-800 relative z-50 p-4 drop-shadow-2xl py-2 flex-grow-0 basis-auto shrink"
     style="border-bottom: 1px solid #535353"
   >
     <p class="text-base font-semibold relative">
@@ -28,7 +28,9 @@ export default {
       return this.$store.getters["chats/selectedChatId"];
     },
     senderName() {
-      return this.$store.getters["chats/fullNameByChatId"](this.chatId);
+      const senderId = this.$store.getters["chats/senderIdOnSelectedChat"](this.$auth.user.id)
+      const sender = this.$store.getters["contacts/contactById"](senderId)
+      return sender ? sender.full_name : senderId;
     },
     lastSeen() {
       const participants = this.$store.getters["chats/participantsByChatId"](
