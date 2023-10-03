@@ -1,20 +1,120 @@
 <template>
   <dialog id="new_contact_modal" class="modal">
-    <div class="modal-box w-11/12 max-w-5xl">
+    <div
+      class="modal-box w-11/12 md:w-6/12 lg:w-5/12 max-w-lg max-h-[350px] overflow-hidden flex flex-col gap-5 min-h-[350px]"
+    >
       <h3 class="font-bold text-lg">New Contact</h3>
-      <p class="py-4">Click the button below to close</p>
+      <p class="py-4">Search by id</p>
+      <div class="flex gap-4 relative">
+        <input type="text" v-model="identifier" class="input w-3/4" />
+        <ButtonSolid
+          @click="handleSearch"
+          :class="['w-1/4 btn-accent', isLoading ? 'btn-disabled' : '', identifier.match(/\S/g) ? '' : 'btn-disabled']"
+        >
+          <div class="flex w-full justify-center items-center gap-2">
+            <span v-if="isLoading" class="loading loading-spinner loading-sm"></span>
+            <span>Search</span>
+          </div></ButtonSolid
+        >
+        <span
+          class="absolute text-sm font-medium text-red-700"
+          v-if="error.status"
+          style="bottom: -1.75rem; left: 1rem"
+          >{{ error.msg }}</span
+        >
+        <span
+          class="absolute text-sm font-medium text-green-700"
+          v-if="isFounded"
+          style="bottom: -1.75rem; left: 1rem"
+          >User found!</span
+        >
+      </div>
       <div class="modal-action">
-        <form method="dialog">
+        <form method="dialog" class="w-full">
           <!-- if there is a button, it will close the modal -->
-          <button class="btn">Close</button>
+          <ButtonSolid
+            @click="handleAddContact"
+            :class="['btn btn-primary w-full', isFounded ? '' : 'btn-disabled']"
+          >
+            Add Contact
+          </ButtonSolid>
         </form>
       </div>
     </div>
+    <form method="dialog" class="modal-backdrop">
+      <button @click="resetAll"></button>
+    </form>
   </dialog>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      isFounded: false,
+      error: {
+        status: false,
+        msg: ''
+      },
+      identifier: "",
+      isLoading: false,
+      retrievedContact: {}
+    };
+  },
+  methods: {
+    async handleSearch() {
+      this.reset();
+      this.identifier = this.identifier.match(/\S/g).join("");
+
+      if(this.$store.getters["contacts/contactById"](this.identifier)){
+        this.error = {status: true, msg: 'user already exists on contact list!'}
+        return
+      }
+
+      let response;      
+      
+      try {
+        this.isLoading = true;
+        
+        // delaying action
+        await new Promise(resolve => setTimeout(resolve, 3000))
+
+        response = await this.$axios.get(
+          `user/public/${this.identifier}`
+        );
+        
+        this.isLoading = false;
+      } catch (e) {
+        this.isLoading = false;
+        this.error = {status: true, msg: 'User not found!'}
+        return
+      }
+      this.isFounded = true;
+
+      const user = response.data.user
+      this.retrievedContact = {
+        id: this.identifier,
+        last_seen: 'online',
+        full_name: user.full_name,
+        username: user.username,
+      }
+    },
+    handleAddContact() {
+      this.$store.commit("contacts/PUSH_CONTACT", this.retrievedContact)
+      this.resetAll();
+    },
+    reset() {
+      this.isFounded = false;
+      this.error = {status: false, msg: ''};
+      this.isLoading = false;
+      this.retrievedContact= {};
+    },
+    resetAll(){
+      this.identifier = "";
+      this.reset();
+    }
+  },
+};
 </script>
 
 <style>

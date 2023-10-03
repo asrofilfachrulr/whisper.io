@@ -8,7 +8,7 @@
         <input
           v-model="searchName"
           type="text"
-          placeholder="Search a name or username"
+          placeholder="Recepient username or id"
           class="input input-bordered w-full max-w-xs"
         />
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="index relative">
-    <ButtonOutline :class="'absolute top-4 right-4'" @click="logout">
+    <ButtonOutline :class="'absolute top-4 right-4 z-30'" @click="logout">
       Logout
     </ButtonOutline>
     <main

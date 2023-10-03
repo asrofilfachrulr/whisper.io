@@ -39,15 +39,28 @@
                 v-model="fullName"
               />
             </div>
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input
-              type="password"
-              class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
-              required
-              v-model="password"
-            />
+            <div class="mb-4">
+              <label class="label">
+                <span class="label-text">Username</span>
+              </label>
+              <input
+                type="text"
+                class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+                required
+                v-model="username"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="label">
+                <span class="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                class="text-sm font-mono input input-bordered w-full max-w-xs text-white focus:border-2 focus:border-violet-500 rounded-md"
+                required
+                v-model="password"
+              />
+            </div>
             <div class="card-actions justify-end mt-8 w-full">
               <ButtonSolid :class="'btn-primary w-full'" :type="'submit'"
                 >Register</ButtonSolid
@@ -100,6 +113,7 @@ export default {
       email: "",
       fullName: "",
       password: "",
+      username: "",
     };
   },
   head() {
@@ -122,6 +136,7 @@ export default {
           email: this.email,
           full_name: this.fullName,
           password: this.password,
+          username: this.username
         });
 
         console.log("response register: ", response);

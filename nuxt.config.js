@@ -30,7 +30,8 @@ export default {
       }
     },
     redirect: {
-      home: '/home'
+      home: '/home',
+      logout: '/login'
     }
   },
 
