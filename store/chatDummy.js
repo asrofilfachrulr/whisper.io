@@ -3,8 +3,7 @@
 export const state = () => ({
   item: {
     id: "chat-341231",
-    participants: ["@id_dummy01", "user-456"],
-    full_name: 'John Seo',
+    participants: ["@id_dummy01", "@id_dummy03"],
     time: new Date("2023-09-22T10:30:00"),
     isRead: false,
     messages: [
@@ -18,7 +17,7 @@ export const state = () => ({
       {
         id: "message-30182311",
         time: new Date("2023-09-22T08:05:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I'm doing well, thanks for asking!",
       },
@@ -32,7 +31,7 @@ export const state = () => ({
       {
         id: "message-30182313",
         time: new Date("2023-09-22T08:15:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I've been working on some exciting projects.",
       },
@@ -46,7 +45,7 @@ export const state = () => ({
       {
         id: "message-30182315",
         time: new Date("2023-09-22T08:25:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I'm working on a new website and a mobile app.",
       },
@@ -61,7 +60,7 @@ export const state = () => ({
       {
         id: "message-30182317",
         time: new Date("2023-09-22T08:35:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content:
           "Yes, I am adding real-time chat functionality to the app.",
@@ -77,7 +76,7 @@ export const state = () => ({
       {
         id: "message-30182319",
         time: new Date("2023-09-22T08:45:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I'm aiming to launch it next month.",
       },
@@ -92,7 +91,7 @@ export const state = () => ({
       {
         id: "message-30182321",
         time: new Date("2023-09-22T08:55:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "Thanks, I'll definitely reach out for feedback.",
       },
@@ -106,7 +105,7 @@ export const state = () => ({
       {
         id: "message-30182323",
         time: new Date("2023-09-23T09:05:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "It's a sunny day with clear skies!",
       },
@@ -120,7 +119,7 @@ export const state = () => ({
       {
         id: "message-30182325",
         time: new Date("2023-09-23T09:15:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "Rainy days can be cozy too!",
       },
@@ -134,7 +133,7 @@ export const state = () => ({
       {
         id: "message-30182327",
         time: new Date("2023-09-23T09:25:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "That sounds lovely. What kind of tea do you prefer?",
       },
@@ -148,7 +147,7 @@ export const state = () => ({
       {
         id: "message-30182329",
         time: new Date("2023-09-23T09:35:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I enjoy green tea. It's so refreshing!",
       },
@@ -163,7 +162,7 @@ export const state = () => ({
       {
         id: "message-30182331",
         time: new Date("2023-09-23T09:45:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I like organic brands. They feel healthier.",
       },
@@ -177,7 +176,7 @@ export const state = () => ({
       {
         id: "message-30182333",
         time: new Date("2023-09-23T09:55:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "Absolutely! Regular exercise helps too.",
       },
@@ -191,7 +190,7 @@ export const state = () => ({
       {
         id: "message-30182335",
         time: new Date("2023-09-23T10:05:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "That's a great way to stay in shape!",
       },
@@ -205,7 +204,7 @@ export const state = () => ({
       {
         id: "message-30182337",
         time: new Date("2023-09-23T10:15:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I need to get back to my workout routine as well.",
       },
@@ -219,7 +218,7 @@ export const state = () => ({
       {
         id: "message-30182339",
         time: new Date("2023-09-23T10:25:00"),
-        sender: "user-456",
+        sender: "@id_dummy03",
         isRead: true,
         content: "I hope so! Thanks for the motivation.",
       },

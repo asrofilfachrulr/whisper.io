@@ -105,6 +105,7 @@ export default {
 
       this.$store.commit("chats/SELECT_CHAT", { id: chatId });
       document.getElementById("new_whisper_modal").close()
+      this.$store.commit("page/home/SET_MOBILE_CONTEXT", 'contentbar')
     },
   },
   watch: {

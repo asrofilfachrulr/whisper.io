@@ -2,7 +2,7 @@
   <div
     class="flex flex-col justify-center items-center w-full h-full opacity-10"
   >
-    <p class="mb-4" style="scale: 10">
+    <p class="mb-4">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -26,5 +26,14 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+p {
+  scale: 7;
+}
+
+@media (min-width: 768px){
+  p {
+    scale: 10;
+  }
+}
 </style>

@@ -3,7 +3,6 @@
     { 
       id: '',                   ==> id chat room
       participants: ['', ''],   ==> private msg, each ids of user
-      full_name: '',            ==> full_name of sender
       time: Date Obj,           ==> last chat time
       isRead: true,
       messages: [

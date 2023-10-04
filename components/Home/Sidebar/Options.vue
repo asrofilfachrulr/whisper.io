@@ -61,7 +61,7 @@
       </svg>
       &nbsp; Settings
     </button>
-    <button class="text-sm w-fit">
+    <button class="text-sm w-fit" @click="handleLogout">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -98,6 +98,9 @@ export default {
         document.getElementById(id).showModal()
       })
     },
+    handleLogout(){
+      this.$auth.logout();
+    }
   },
 };
 </script>

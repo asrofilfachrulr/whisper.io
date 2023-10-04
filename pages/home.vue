@@ -1,24 +1,25 @@
 <template>
   <div class="index relative">
-    <ButtonAccentOutline :class="'absolute top-4 right-4 z-30'" @click="logout">
-      Logout
-    </ButtonAccentOutline>
     <main
       class="h-screen w-screen flex flex-col justify-center items-center relative"
     >
-      <HomeDebugLoginfo :class="'absolute bottom-2 right-4'" />
-      <button
+      <HomeDebugLoginfo v-if="clientWidth >= 768" :class="'absolute bottom-2 right-4'" />
+      <button v-if="!isDebugging"
         class="btn absolute bottom-16 right-4 hidden md:inline-flex"
         onclick="home_modal.showModal()"
       >
-        Dummy Data
+        Clear Data
       </button>
       <HomeModalDummyData />
       <component v-if="homeEventName" :is="modalComponent" />
       <Home>
-        <div class="h-full w-full overflow-hidden block md:flex flex-nowrap">
+        <div v-if="clientWidth >= 768" class="h-full w-full overflow-hidden block md:flex flex-nowrap">
           <HomeSidebar :id="'home-sidebar'" />
           <HomeContentbar :id="'home-contentbar'" />
+        </div>
+        <div v-else class="h-full w-full overflow-hidden block md:flex flex-nowrap">
+          <HomeSidebar v-if="mobileContext === 'sidebar'" :id="'home-sidebar'" />
+          <HomeContentbar v-else-if="mobileContext === 'contentbar'" :id="'home-contentbar'" />
         </div>
       </Home>
     </main>
@@ -47,9 +48,22 @@ export default {
     };
   },
   data() {
-    return {};
+    return {
+    
+    };
   },
   computed: {
+    chatId(){
+      return this.$store.getters["chats/selectedChatId"]
+    },
+    mobileContext() {
+      return this.$store.getters["page/home/getMobileContext"]
+    },
+
+    clientWidth(){
+      return this.$store.getters["page/home/getClientWidth"]
+    },
+
     homeEventName() {
       return this.$store.getters["page/home/eventName"];
     },
@@ -65,6 +79,9 @@ export default {
     socketStatus() {
       return this.$store.getters["socket/status"];
     },
+    isDebugging(){
+      return this.$route.query.debug
+    },
   },
   watch: {
     socketStatus(newVal, oldVal) {
@@ -77,9 +94,6 @@ export default {
   },
   middleware: ["auth"],
   methods: {
-    logout() {
-      this.$auth.logout();
-    },
     setupSocketForChat() {
       this.registerId();
       this.waitIncomingMessage();
@@ -99,14 +113,9 @@ export default {
         };
         if (!chatId) {
           chatId = uuidv4();
-          const contact = this.$store.getters["contacts/contactById"](
-            data.sender
-          );
-          const fullname = contact ? contact.full_name : data.sender;
           this.$store.commit("chats/PUSH_CHAT", {
             id: chatId,
             participants,
-            full_name: fullname,
             time: msg.time,
             isRead: false,
             messages: [msg],
@@ -120,9 +129,48 @@ export default {
       console.log("[PLUGINS: INFO] Registering id to create room");
       this.$socket.emit("register-id", this.$auth.user.id);
     },
+    loadContactDummy() {
+      console.log("[INFO] Load contact dummy");
+      const contacts = this.$store.getters["contactDummy/items"];
+      console.log("[INFO] Set contact dummy to contacts");
+      this.$store.commit(
+        "contacts/SET_CONTACTS",
+        contacts.map((contact) => ({
+          id: contact.id,
+          full_name: contact.full_name,
+          last_seen: "online",
+          username: contact.username,
+        }))
+      );
+    },
+    loadChatDummy() {
+      this.loadContactDummy();
+      console.log("[INFO] Load chat dummy");
+      const chat = this.$store.getters["chatDummy/item"];
+      console.log("[INFO] Set chat dummy to chats");
+      this.$store.commit("chats/PUSH_CHAT", chat);
+    },
+    updateInnerWidth(){
+      this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth)
+    },
   },
   mounted() {
+    window.addEventListener('resize', this.updateInnerWidth);
     this.setupSocketForChat();
+    
+    if(this.isDebugging){
+      this.$store.commit("contacts/_CLEAR_DATA");
+      this.$store.commit("chats/_CLEAR_DATA");
+
+      this.loadContactDummy()
+      this.loadChatDummy()
+    }
+
+    console.log("[DEBUG] initial Window innerWidth: ", window.innerWidth)
+    this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth)
   },
+  beforeDestroy(){
+    window.removeEventListener('resize', this.updateInnerWidth);
+  }
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="tabs bg-zinc-800 h-14 items-center px-4">
     <a
       :class="[
-        'tab tab-lifted  text-base',
+        'tab md:tab-xs lg:tab-md tab-lifted text-base md:text-xs lg:text-base',
         sidebarTabCurrent === 'whispers' ? 'tab-active font-semibold' : '',
       ]"
       @click="$emit('changeTabs', 'whispers')"
@@ -23,7 +23,7 @@
     >
     <a
       :class="[
-        'tab tab-lifted text-base',
+        'tab md:tab-xs lg:tab-md tab-lifted text-base md:text-xs lg:text-base',
         sidebarTabCurrent === 'contacts' ? 'tab-active font-semibold' : '',
       ]"
       @click="$emit('changeTabs', 'contacts')"

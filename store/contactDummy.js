@@ -1,10 +1,10 @@
 export const state = () => ({
   items: [
-    {
-      id: '@id_dummy01',
-      username: 'anya',
-      full_name: 'Anya Sebastian',
-    },
+    // {
+    //   id: '@id_dummy01',
+    //   username: 'anya',
+    //   full_name: 'Anya Sebastian',
+    // },
     {
       id: '@id_dummy02',
       username: 'fachri',

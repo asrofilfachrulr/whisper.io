@@ -53,6 +53,7 @@ export default {
         }
 
         this.$store.commit("chats/SELECT_CHAT", { id: chatId });
+        this.$store.commit("page/home/SET_MOBILE_CONTEXT", 'contentbar')
       };
 
       const removeContactCallback = () => {

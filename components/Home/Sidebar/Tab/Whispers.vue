@@ -58,6 +58,7 @@ export default {
       this.$store.commit("chats/SELECT_CHAT", {
         id: this.chats[idx].id,
       });
+      this.$store.commit("page/home/SET_MOBILE_CONTEXT", 'contentbar')
     },
   },
 };
