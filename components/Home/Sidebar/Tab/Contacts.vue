@@ -1,6 +1,11 @@
 <template>
   <div class="tab-content px-4 hide-scrollbar text-sm flex flex-col gap-2">
-    <div v-for="(contact, k) in contacts" :key="k" class="min-h-[55px] relative">
+    <div
+      v-for="(contact, k) in contacts"
+      :key="k"
+      class="min-h-[55px] relative cursor-pointer"
+      @click="handleSelectContact(contact)"
+    >
       <p>{{ contact.full_name }}</p>
       <p class="text-xs italic text-slate-200/70">@{{ contact.username }}</p>
       <div class="absolute w-full h-4 bottom-0">
@@ -12,10 +17,89 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from "uuid";
+
 export default {
+  data() {
+    return {
+      modalName: "action",
+    };
+  },
   computed: {
     contacts() {
       return this.$store.getters["contacts/items"];
+    },
+    modalId() {
+      return this.$store.getters["page/home/modalIdByName"](this.modalName);
+    },
+  },
+  methods: {
+    handleSelectContact(contact) {
+      const openChatCallback = () => {
+        let chatId = this.$store.getters["chats/isAnyChatByParticipants"](
+          [...[this.$auth.user.id, contact.id]].sort()
+        );
+
+        if (!chatId) {
+          chatId = uuidv4();
+          this.$store.commit("chats/PUSH_CHAT", {
+            id: chatId,
+            participants: [this.$auth.user.id, contact.id],
+            full_name: contact.full_name,
+            time: new Date(),
+            isRead: true,
+            messages: [],
+          });
+        }
+
+        this.$store.commit("chats/SELECT_CHAT", { id: chatId });
+      };
+
+      const removeContactCallback = () => {
+        const modalName = "yesno-confirmation";
+        const modalId =
+          this.$store.getters["page/home/modalIdByName"](modalName);
+
+        const cb = () => {
+          this.$store.commit("contacts/DELETE_CONTACT_BY_ID", contact.id);
+        };
+        
+        this.$store.commit("page/home/NEW_EVENT", {
+          name: modalName,
+          callback: cb,
+          data: {
+            message: `Are you sure to delete ${contact.full_name} from your contact?`,
+            type: "danger",
+          },
+        });
+
+        this.$nextTick(() => {
+          document.getElementById(modalId).show();
+        });
+      };
+
+      this.$store.commit("page/home/NEW_EVENT", {
+        name: this.modalName,
+        data: {
+          title: "Contact Action",
+          buttons: [
+            {
+              class: "btn-accent",
+              text: "OPEN CHAT",
+              callback: openChatCallback,
+            },
+            {
+              class: "btn-error",
+              text: "REMOVE",
+              callback: removeContactCallback,
+            },
+          ],
+        },
+      });
+
+      this.$nextTick(() => {
+        document.getElementById(this.modalId).show();
+      });
     },
   },
 };

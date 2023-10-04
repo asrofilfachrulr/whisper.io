@@ -3,10 +3,8 @@
     items: [
       {
         id: '',
-        last_seen: '',
         full_name: '',
         username: '',
-        imageUrl?: ''
       }
     ]
   }
@@ -25,6 +23,15 @@ export const mutations = {
   SET_CONTACTS(state, contacts){
     state.items = contacts
   },
+
+  DELETE_CONTACT_BY_ID(state, id) {
+    for(let i = 0; i < state.items.length; i++)
+      if(state.items[i].id === id){
+        state.items.splice(i,1)
+        break;
+      }
+  },
+
   _CLEAR_DATA(state) {
     state.items = [] 
   }

@@ -55,6 +55,17 @@ export const mutations = {
   SELECT_CHAT(state, { id }) {
     state.selectedChatId = id
   },
+
+  // Ensure to unselect chat first!
+  DELETE_SELECTED_CHAT(state){
+    for (let i = 0; i < state.items.length; i++)
+      if (state.items[i].id === state.selectedChatId) {
+        state.items.splice(i,1)
+        state.selectedChatId = ''
+        break
+      }
+  },
+
   _CLEAR_DATA(state) {
     state.items = []
     state.selectedChatId = ''

@@ -27,7 +27,7 @@
               >
             </h4>
             <NuxtLink to="/register"
-              ><ButtonOutline :class="'mt-8'"
+              ><ButtonAccentOutline :class="'mt-8'"
                 >Start Whispering Now
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@
                     stroke-linejoin="round"
                     d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                   />
-                </svg> </ButtonOutline
+                </svg> </ButtonAccentOutline
             ></NuxtLink>
           </div>
           <div

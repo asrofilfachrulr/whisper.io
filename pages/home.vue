@@ -1,8 +1,8 @@
 <template>
   <div class="index relative">
-    <ButtonOutline :class="'absolute top-4 right-4 z-30'" @click="logout">
+    <ButtonAccentOutline :class="'absolute top-4 right-4 z-30'" @click="logout">
       Logout
-    </ButtonOutline>
+    </ButtonAccentOutline>
     <main
       class="h-screen w-screen flex flex-col justify-center items-center relative"
     >
@@ -28,6 +28,8 @@
 <script>
 import HomeModalNewWhisper from "../components/Home/Modal/New/Whisper";
 import HomeModalNewContact from "../components/Home/Modal/New/Contact";
+import HomeModalConfirmationYesNo from "../components/Home/Modal/Confirmation/YesNo";
+import HomeModalAction from "../components/Home/Modal/Action"
 import ModalEmpty from "../components/Modal/Empty";
 import { v4 as uuidv4 } from "uuid";
 
@@ -49,12 +51,16 @@ export default {
   },
   computed: {
     homeEventName() {
-      return this.$store.getters["page/home/getEventName"];
+      return this.$store.getters["page/home/eventName"];
     },
     modalComponent() {
-      if (this.homeEventName === "new-whisper") return HomeModalNewWhisper;
-      else if (this.homeEventName === "new-contact") return HomeModalNewContact;
-      else return ModalEmpty;
+      switch(this.homeEventName){
+        case "new-whisper": return HomeModalNewWhisper;
+        case "new-contact": return HomeModalNewContact;
+        case "yesno-confirmation": return HomeModalConfirmationYesNo;
+        case "action" : return HomeModalAction;
+        default: return ModalEmpty;
+      }
     },
     socketStatus() {
       return this.$store.getters["socket/status"];
