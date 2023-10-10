@@ -1,10 +1,17 @@
 <template>
-  <div class="index relative">
+  <div class="index">
     <main
       class="h-screen w-screen flex flex-col justify-center items-center relative"
     >
-      <HomeDebugLoginfo v-if="clientWidth >= 768" :class="'absolute bottom-2 right-4'" />
-      <button v-if="!isDebugging"
+      <div v-if="isShowAlert" class="absolute top-6 left-0 w-full flex justify-center overflow-hidden">
+        <HomeAlert />
+      </div>
+      <HomeDebugLoginfo
+        v-if="clientWidth >= 768"
+        :class="'absolute bottom-2 right-4'"
+      />
+      <button
+        v-if="isDebugging"
         class="btn absolute bottom-16 right-4 hidden md:inline-flex"
         onclick="home_modal.showModal()"
       >
@@ -13,13 +20,25 @@
       <HomeModalDummyData />
       <component v-if="homeEventName" :is="modalComponent" />
       <Home>
-        <div v-if="clientWidth >= 768" class="h-full w-full overflow-hidden block md:flex flex-nowrap">
+        <div
+          v-if="clientWidth >= 768"
+          class="h-full w-full overflow-hidden block md:flex flex-nowrap"
+        >
           <HomeSidebar :id="'home-sidebar'" />
           <HomeContentbar :id="'home-contentbar'" />
         </div>
-        <div v-else class="h-full w-full overflow-hidden block md:flex flex-nowrap">
-          <HomeSidebar v-if="mobileContext === 'sidebar'" :id="'home-sidebar'" />
-          <HomeContentbar v-else-if="mobileContext === 'contentbar'" :id="'home-contentbar'" />
+        <div
+          v-else
+          class="h-full w-full overflow-hidden block md:flex flex-nowrap"
+        >
+          <HomeSidebar
+            v-if="mobileContext === 'sidebar'"
+            :id="'home-sidebar'"
+          />
+          <HomeContentbar
+            v-else-if="mobileContext === 'contentbar'"
+            :id="'home-contentbar'"
+          />
         </div>
       </Home>
     </main>
@@ -30,7 +49,7 @@
 import HomeModalNewWhisper from "../components/Home/Modal/New/Whisper";
 import HomeModalNewContact from "../components/Home/Modal/New/Contact";
 import HomeModalConfirmationYesNo from "../components/Home/Modal/Confirmation/YesNo";
-import HomeModalAction from "../components/Home/Modal/Action"
+import HomeModalAction from "../components/Home/Modal/Action";
 import ModalEmpty from "../components/Modal/Empty";
 import { v4 as uuidv4 } from "uuid";
 
@@ -48,39 +67,46 @@ export default {
     };
   },
   data() {
-    return {
-    
-    };
+    return {};
   },
   computed: {
-    chatId(){
-      return this.$store.getters["chats/selectedChatId"]
+    chatId() {
+      return this.$store.getters["chats/selectedChatId"];
     },
     mobileContext() {
-      return this.$store.getters["page/home/getMobileContext"]
+      return this.$store.getters["page/home/getMobileContext"];
     },
 
-    clientWidth(){
-      return this.$store.getters["page/home/getClientWidth"]
+    clientWidth() {
+      return this.$store.getters["page/home/getClientWidth"];
+    },
+
+    isShowAlert() {
+      return this.$store.getters["page/home/alertShow"];
     },
 
     homeEventName() {
       return this.$store.getters["page/home/eventName"];
     },
     modalComponent() {
-      switch(this.homeEventName){
-        case "new-whisper": return HomeModalNewWhisper;
-        case "new-contact": return HomeModalNewContact;
-        case "yesno-confirmation": return HomeModalConfirmationYesNo;
-        case "action" : return HomeModalAction;
-        default: return ModalEmpty;
+      switch (this.homeEventName) {
+        case "new-whisper":
+          return HomeModalNewWhisper;
+        case "new-contact":
+          return HomeModalNewContact;
+        case "yesno-confirmation":
+          return HomeModalConfirmationYesNo;
+        case "action":
+          return HomeModalAction;
+        default:
+          return ModalEmpty;
       }
     },
     socketStatus() {
       return this.$store.getters["socket/status"];
     },
-    isDebugging(){
-      return this.$route.query.debug
+    isDebugging() {
+      return this.$route.query.debug;
     },
   },
   watch: {
@@ -94,6 +120,9 @@ export default {
   },
   middleware: ["auth"],
   methods: {
+    fetchData() {
+      this.$store.dispatch("contacts/fetchData");
+    },
     setupSocketForChat() {
       this.registerId();
       this.waitIncomingMessage();
@@ -150,27 +179,48 @@ export default {
       console.log("[INFO] Set chat dummy to chats");
       this.$store.commit("chats/PUSH_CHAT", chat);
     },
-    updateInnerWidth(){
-      this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth)
+    updateInnerWidth() {
+      this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth);
     },
   },
   mounted() {
-    window.addEventListener('resize', this.updateInnerWidth);
+    window.addEventListener("resize", this.updateInnerWidth);
+
+    console.log("[INFO] Connecting to socket..");
     this.setupSocketForChat();
-    
-    if(this.isDebugging){
+
+    console.log("[INFO] Fetching data..");
+    this.fetchData();
+
+    if (this.isDebugging) {
       this.$store.commit("contacts/_CLEAR_DATA");
       this.$store.commit("chats/_CLEAR_DATA");
 
-      this.loadContactDummy()
-      this.loadChatDummy()
+      this.loadContactDummy();
+      this.loadChatDummy();
     }
 
-    console.log("[DEBUG] initial Window innerWidth: ", window.innerWidth)
-    this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth)
+    console.log("[DEBUG] initial Window innerWidth: ", window.innerWidth);
+    this.$store.commit("page/home/SET_CLIENT_WIDTH", window.innerWidth);
   },
-  beforeDestroy(){
-    window.removeEventListener('resize', this.updateInnerWidth);
-  }
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateInnerWidth);
+  },
 };
 </script>
+
+<style scoped>
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body > .index {
+  position: fixed;
+    inset: 0;
+    overflow: auto;
+
+    display: grid;
+    place-items: center;
+}
+</style>

@@ -124,11 +124,13 @@ export default {
       }
 
       const cb = () => {
-        this.$store.commit("contacts/PUSH_CONTACT", {
+        const contact = {
           id: this.senderId,
           username: user.username,
           full_name: user.full_name,
-        });
+        };
+
+        this.$store.dispatch("contacts/add", contact);
 
         this.$store.commit("page/home/CLEAR_EVENT");
       };

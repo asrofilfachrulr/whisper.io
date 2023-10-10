@@ -11,7 +11,7 @@
       <HomeSidebarTabWhispers v-if="sidebarTabCurrent === 'whispers'" />
       <HomeSidebarTabContacts v-else-if="sidebarTabCurrent === 'contacts'" />
     </div>
-    <div class="lower-menu h-1/6 pb-4 bg-zinc-800 z-50 relative">
+    <div class="lower-menu h-1/6 pb-4 bg-zinc-800 z-50 relative ">
       <div class="divider m-0"></div>
       <HomeSidebarOptions :sidebarTabCurrent="sidebarTabCurrent" />
     </div>

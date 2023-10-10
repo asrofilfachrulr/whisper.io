@@ -82,7 +82,7 @@ export default {
         this.isLoading = true;
         
         // delaying action
-        await new Promise(resolve => setTimeout(resolve, 3000))
+        await new Promise(resolve => setTimeout(resolve, 1200))
 
         response = await this.$axios.get(
           `user/public/${this.identifier}`
@@ -99,13 +99,12 @@ export default {
       const user = response.data.user
       this.retrievedContact = {
         id: user.id,
-        last_seen: 'online',
         full_name: user.full_name,
         username: user.username,
       }
     },
     handleAddContact() {
-      this.$store.commit("contacts/PUSH_CONTACT", this.retrievedContact)
+      this.$store.dispatch("contacts/add", this.retrievedContact);
       this.resetAll();
     },
     reset() {

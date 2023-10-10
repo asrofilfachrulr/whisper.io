@@ -62,7 +62,7 @@ export default {
           this.$store.getters["page/home/modalIdByName"](modalName);
 
         const cb = () => {
-          this.$store.commit("contacts/DELETE_CONTACT_BY_ID", contact.id);
+          this.$store.dispatch("contacts/delete", contact.id);
         };
         
         this.$store.commit("page/home/NEW_EVENT", {

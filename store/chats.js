@@ -68,6 +68,9 @@ export const mutations = {
   _CLEAR_DATA(state) {
     state.items = []
     state.selectedChatId = ''
+  },
+  TEST(state){
+    console.log("TEST FROM CHAT.js VUEX")
   }
 }
 export const actions = {

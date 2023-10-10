@@ -48,6 +48,11 @@ export const state = () => ({
   ],
 });
 
+export const mutations = {
+  SET_DATA(state, data){
+    state.items = data
+  }
+}
 
 export const getters = {
   items: (state) => state.items

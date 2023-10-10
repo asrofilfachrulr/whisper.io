@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-4 justify-end h-full w-full px-4 pb-4">
+  <div class="flex flex-col gap-6 justify-start h-full w-full px-4 py-4">
     <button
-      class="w-fit text-sm"
+      class="w-fit text-xs lg:text-sm"
       v-if="sidebarTabCurrent === 'whispers'"
       @click="handleClickNewOptions('new_whisper_modal')"
     >
@@ -23,7 +23,7 @@
       &nbsp; New Whisper
     </button>
     <button
-      class="w-fit text-sm"
+      class="w-fit text-xs lg:text-sm"
       v-if="sidebarTabCurrent === 'contacts'"
       @click="handleClickNewOptions('new_contact_modal')"
     >
@@ -45,7 +45,7 @@
       </svg>
       &nbsp; New Contact
     </button>
-    <button class="text-sm w-fit">
+    <!-- <button class="text-xs lg:text-sm w-fit">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -60,8 +60,8 @@
         />
       </svg>
       &nbsp; Settings
-    </button>
-    <button class="text-sm w-fit" @click="handleLogout">
+    </button> -->
+    <button class="text-xs lg:text-sm w-fit" @click="handleLogout">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
