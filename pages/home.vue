@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div id="home-root" class="index">
     <main
       class="h-screen w-screen flex flex-col justify-center items-center relative"
     >
@@ -209,13 +209,17 @@ export default {
 };
 </script>
 
-<style scoped>
-body {
-  height: 100vh;
+<style>
+html:has(#home-root) {
+  height: -webkit-fill-available;
+}
+body:has(#home-root) {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;;
   overflow: hidden;
 }
 
-body > .index {
+body .index {
   position: fixed;
     inset: 0;
     overflow: auto;
