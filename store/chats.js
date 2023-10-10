@@ -28,6 +28,8 @@ export const state = () => ({
 export const mutations = {
   // new chat also with the message(s)
   PUSH_CHAT(state, chat) {
+    if(state.items.some(item => item.id === chat.id)) return
+
     state.items.push(chat)
   },
 
@@ -48,6 +50,15 @@ export const mutations = {
         break
       }
   },
+
+  SET_MESSAGE_BY_CHATID(state, { id, messages }) {
+    for (let i = 0; i < state.items.length; i++)
+      if (state.items[i].id === id) {
+        state.items[i].messages = messages
+        break
+      }
+  },
+
   UNSELECT_CHAT(state) {
     state.selectedChatId = ''
   },
@@ -65,15 +76,104 @@ export const mutations = {
       }
   },
 
+  DELETE_MESSAGE_BY_ID_ON_SELECTED_CHAT(state, id){
+    for (let i = 0; i < state.items.length; i++){
+      if (state.items[i].id === state.selectedChatId) {
+        for(let j = state.items[i].messages.length - 1; j >= 0; j--){
+          if(state.items[i].messages[j].id === id){
+            state.items[i].messages.splice(j,1)
+            break
+          }
+        }
+        break
+      }
+    }
+  },
+
   _CLEAR_DATA(state) {
     state.items = []
     state.selectedChatId = ''
   },
-  TEST(state){
-    console.log("TEST FROM CHAT.js VUEX")
-  }
 }
+
 export const actions = {
+  async fetchData({commit}) {
+    try {
+      console.log("[FETCH] Fetching chats...")
+      const response = await this.$axios.get("/chats")
+      if(response.status === 200){
+        console.log("[FETCH] Chats fetched...")
+        const {chats} = response.data
+        chats.forEach(chat => {
+          commit('PUSH_CHAT', chat)
+        })
+      } else {
+        throw response;
+      }
+    } catch(e) {
+      console.log("[FETCH] Fail to fetch chats...")
+      commit('page/home/NEW_ALERT', {
+        data: {
+          title: 'Fetch chats failed',
+          description: e.data?.message || '',
+        },
+        type: 'error',
+        show: true
+      }, { root: true })      
+    }
+  },
+
+  async delete({commit}, id) {
+    try {
+      console.log("[API] delete chat...")
+      const response = await this.$axios.delete("/chat", {
+        data: {
+          chatId:id
+        }
+      })
+
+      if(response.status === 200){
+        console.log("[API] chat deleted...")
+        commit("DELETE_SELECTED_CHAT")
+      } else 
+        throw response
+    } catch(e) {
+      console.log("[API] fail to delete chat...")
+      commit('page/home/NEW_ALERT', {
+        data: {
+          title: 'Delete Failed',
+          description: e.data?.message || '',
+        },
+        type: 'error',
+        show: true
+      }, { root: true })
+    }
+  },
+
+  async add({commit}, id) {
+    try {
+      console.log("[API] adding chat...")
+      const response = await this.$axios.post("/chat", {
+        participantId: id
+      })
+      if(response.status === 201){
+        console.log("[API] chat added...")
+        const {chat} = response.data
+        commit("PUSH_CHAT", chat)
+      } else 
+        throw response
+    } catch (e) {
+      console.log("[API] fail to add chat...")
+      commit('page/home/NEW_ALERT', {
+        data: {
+          title: 'New Chat Failed',
+          description: e.data?.message || '',
+        },
+        type: 'error',
+        show: true
+      }, { root: true })
+    }
+  }
 }
 
 export const getters = {

@@ -9,6 +9,11 @@ const defaultAlert = {
   show: false,
 }
 
+const defaultLoading = {
+  status: false,
+  text: 'loading'
+}
+
 export const state = () => ({
   event: defaultEvent,
   modalId: {
@@ -21,7 +26,8 @@ export const state = () => ({
   client: {
     width: 0
   },
-  alert: defaultAlert
+  alert: defaultAlert,
+  loading: defaultLoading
 })
 
 export const mutations = {
@@ -38,6 +44,16 @@ export const mutations = {
   },
   CLEAR_ALERT(state) {
     state.alert = defaultAlert
+  },
+
+  NEW_LOADING(state, loading) {
+    state.loading = loading
+  },
+  SET_LOADING_TEXT(state, text){
+    state.loading.text = text
+  },
+  CLEAR_LOADING(state) {
+    state.loading = defaultLoading
   },
 
   SET_MOBILE_CONTEXT(state, ctx) {
@@ -59,6 +75,9 @@ export const getters = {
   alertType: (state) => state.alert.type,
   alertData: (state) => state.alert.data,
   alertShow: (state) => state.alert.show,
+
+  isLoading: (state) => state.loading.status,
+  loadingText: (state) => state.loading.text,
 
   modalIdByName: (state) => (name) => state.modalId[name],
 

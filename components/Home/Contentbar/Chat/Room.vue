@@ -8,13 +8,13 @@
     <div v-for="(message, i) in messages" :key="i">
       <div v-if="isDateShown(i)" class="flex justify-center w-full">
         <div class="badge badge-neutral p-4 mx-auto my-4">
-          {{ message.time.toLocaleString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'}) }}
+          {{ new Date(message.time).toLocaleString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'}) }}
         </div>
       </div>
       <div
         :class="[
           'chat my-6',
-          message.sender === userId ? 'chat-end' : 'chat-start',
+          message.sender_id === userId ? 'chat-end' : 'chat-start',
         ]"
       >
         <div
@@ -22,7 +22,7 @@
             'chat-bubble text-sm text-white font-medium relative',
             isLastMessageAndLoading(i)
               ? ''
-              : message.sender === userId
+              : message.sender_id === userId
               ? 'chat-bubble-primary'
               : 'chat-bubble-secondary',
           ]"
@@ -44,7 +44,7 @@
           <span
           :class="['text-[0.7rem] opacity-80 text-slate-100 font-semibold float-right']"
           >{{
-            message.time
+            new Date(message.time)
               .toLocaleTimeString("en-GB")
               .split(":")
               .splice(0, 2)
@@ -71,7 +71,7 @@ export default {
   methods: {
     scrollToBottom() {
       this.$nextTick(() => {
-        this.$refs.chatroom.scrollTop = this.$refs.chatroom.scrollHeight;
+        this.$refs.chatroom.scrollTop = this.$refs.chatroom?.scrollHeight;
       });
     },
     isLastMessageAndLoading(i) {
@@ -79,8 +79,8 @@ export default {
     },
     isDateShown(i) {
       if(i == 0) return true
-      const prevDate = this.messages[i-1].time.toLocaleDateString('en-GB')
-      const currDate = this.messages[i].time.toLocaleDateString('en-GB')
+      const prevDate = new Date(this.messages[i-1].time).toLocaleDateString('en-GB')
+      const currDate = new Date(this.messages[i].time).toLocaleDateString('en-GB')
 
       return prevDate !== currDate
     }

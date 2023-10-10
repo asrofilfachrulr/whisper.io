@@ -35,25 +35,20 @@ export default {
   },
   methods: {
     handleSelectContact(contact) {
-      const openChatCallback = () => {
+      const openChatCallback = async () => {
         let chatId = this.$store.getters["chats/isAnyChatByParticipants"](
           [...[this.$auth.user.id, contact.id]].sort()
         );
 
         if (!chatId) {
-          chatId = uuidv4();
-          this.$store.commit("chats/PUSH_CHAT", {
-            id: chatId,
-            participants: [this.$auth.user.id, contact.id],
-            full_name: contact.full_name,
-            time: new Date(),
-            isRead: true,
-            messages: [],
-          });
+          await this.$store.dispatch("chats/add", contact.id);
+          chatId = this.$store.getters["chats/isAnyChatByParticipants"](
+            [...[this.$auth.user.id, contact.id]].sort()
+          );
         }
 
         this.$store.commit("chats/SELECT_CHAT", { id: chatId });
-        this.$store.commit("page/home/SET_MOBILE_CONTEXT", 'contentbar')
+        this.$store.commit("page/home/SET_MOBILE_CONTEXT", "contentbar");
       };
 
       const removeContactCallback = () => {
@@ -64,7 +59,7 @@ export default {
         const cb = () => {
           this.$store.dispatch("contacts/delete", contact.id);
         };
-        
+
         this.$store.commit("page/home/NEW_EVENT", {
           name: modalName,
           callback: cb,

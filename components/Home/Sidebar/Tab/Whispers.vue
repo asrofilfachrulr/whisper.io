@@ -15,9 +15,17 @@
           ]"
         >
           {{
-            `${chat.time.toLocaleTimeString("en-GB").split(":")[0]}:${
-              chat.time.toLocaleTimeString("en-GB").split(":")[1]
-            }`
+            chat.messages.length > 0
+              ? `${
+                  chat.messages[chat.messages.length - 1].time
+                    .toLocaleTimeString("en-GB")
+                    .split(":")[0]
+                }:${
+                  chat.messages[chat.messages.length - 1].time
+                    .toLocaleTimeString("en-GB")
+                    .split(":")[1]
+                }`
+              : ""
           }}
         </span>
       </p>
@@ -29,10 +37,14 @@
             : 'text-slate-50/80',
         ]"
       >
-        {{ chat.messages.length ? chat.messages[chat.messages.length - 1].content : '' }}
+        {{
+          chat.messages?.length
+            ? chat.messages[chat.messages?.length - 1]?.content
+            : ""
+        }}
       </p>
       <span
-        v-if="!chat.isRead"
+        v-if="!chat.isRead && chat.hasOwnProperty('isRead')"
         class="float-right badge badge-primary mt-1"
       ></span>
       <div class="divider m-0 mt-1 mb-1"></div>
@@ -49,16 +61,19 @@ export default {
     },
   },
   methods: {
-    senderName(chatId){
-      const senderId = this.$store.getters["chats/senderIdByChatId"](this.$auth.user.id, chatId)
-      const sender = this.$store.getters["contacts/contactById"](senderId)
+    senderName(chatId) {
+      const senderId = this.$store.getters["chats/senderIdByChatId"](
+        this.$auth.user.id,
+        chatId
+      );
+      const sender = this.$store.getters["contacts/contactById"](senderId);
       return sender ? sender.full_name : senderId;
     },
     clickChat(idx) {
       this.$store.commit("chats/SELECT_CHAT", {
         id: this.chats[idx].id,
       });
-      this.$store.commit("page/home/SET_MOBILE_CONTEXT", 'contentbar')
+      this.$store.commit("page/home/SET_MOBILE_CONTEXT", "contentbar");
     },
   },
 };

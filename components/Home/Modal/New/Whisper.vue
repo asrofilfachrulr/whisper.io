@@ -85,22 +85,16 @@ export default {
     removeWhiteSpaces(str) {
       return str.replace(/\s/g, "");
     },
-    handleClick(contact) {
+    async handleClick(contact) {
       // search for current chat room, otherwise create new then select it
       const participants = [this.$auth.user.id, contact.id];
       let chatId =
         this.$store.getters["chats/isAnyChatByParticipants"]([...participants].sort())
 
       if(!chatId){
-        chatId = uuidv4()
-          this.$store.commit("chats/PUSH_CHAT", {
-            id: chatId,
-            participants,
-            full_name: contact.full_name,
-            time: new Date(),
-            isRead: true,
-            messages: []
-        })
+        await this.$store.dispatch("chats/add", contact.id)
+        chatId =
+        this.$store.getters["chats/isAnyChatByParticipants"]([...participants].sort())
       }
 
       this.$store.commit("chats/SELECT_CHAT", { id: chatId });

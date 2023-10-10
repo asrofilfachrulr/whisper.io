@@ -77,8 +77,11 @@ export default {
       event.preventDefault();
 
       const recepientId = this.participants[0] !== this.$auth.user.id ? this.participants[0] : this.participants[1]
-
+      
+      const messageId = `@message-${uuidv4()}` 
       const message = {
+        messageId,
+        chatId: this.chatId,
         sender: this.$auth.user.id,
         recepient: recepientId,
         time: new Date(),
@@ -86,9 +89,13 @@ export default {
       };
 
       this.$store.commit("chats/PUSH_MESSAGE", {
-        sender: message.sender,
+        sender_id: message.sender,
         time: message.time,
-        content: message.content
+        content: message.content,
+        isRead: true,
+        isDelivered: true,
+        id: messageId,
+        chat_id: this.chatId
       });
 
       this.textAreaChat = "";
@@ -103,7 +110,19 @@ export default {
       this.loadingState.sendingMsg = true;
       this.$socket.emit("send-message", message, (response) => {
         console.log("[PLUGINS: INFO] Response Status Sending Message: ", response.status)
-        if (response.status) this.loadingState.sendingMsg = false;
+        this.loadingState.sendingMsg = false;
+        console.log(response)
+        if (!response.status) {
+            this.$store.commit('page/home/NEW_ALERT', {
+            data: {
+              title: 'Send message failed',
+              description: response.message || '',
+            },
+            type: 'error',
+            show: true
+          })
+          this.$store.commit('chats/DELETE_MESSAGE_BY_ID_ON_SELECTED_CHAT', messageId)
+        }
       });
     },
     handleEscapeKey(event) {

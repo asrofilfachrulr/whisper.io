@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between w-full min-h-[65px] bg-zinc-800 relative z-50 p-4 drop-shadow-2xl py-2 flex-grow-0 basis-auto shrink"
+    class="flex justify-between w-full min-h-[65px] bg-zinc-800 relative z-30 p-4 drop-shadow-2xl py-2 flex-grow-0 basis-auto shrink"
     style="border-bottom: 1px solid #535353"
   >
     <div class="left flex justify-start">
@@ -150,9 +150,8 @@ export default {
     },
 
     async handleRemoveChat() {
-      const cb = () => {
-        // this.$store.commit("chats/UNSELECT_CHAT")
-        this.$store.commit("chats/DELETE_SELECTED_CHAT");
+      const cb = async () => {
+        await this.$store.dispatch("chats/delete", this.chatId);
 
         this.$store.commit("page/home/CLEAR_EVENT");
       };

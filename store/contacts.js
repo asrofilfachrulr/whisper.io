@@ -50,7 +50,7 @@ export const actions = {
       commit('page/home/NEW_ALERT', {
         data: {
           title: 'Fetch Failed',
-          description: 'Failed to fetch your contact data',
+          description: e.data?.message || '',
         },
         type: 'error',
         show: true
@@ -80,7 +80,7 @@ export const actions = {
       commit('page/home/NEW_ALERT', {
         data: {
           title: 'Delete Failed',
-          description: e.status === 404 ? 'contact not found' : 'server error',
+          description: e.data?.message || '',
         },
         type: 'error',
         show: true
@@ -105,7 +105,7 @@ export const actions = {
       commit('page/home/NEW_ALERT', {
         data: {
           title: 'Add Failed',
-          description: e.status === 400 ? 'contact is already on list' : 'server error',
+          description: e.data?.message || '',
         },
         type: 'error',
         show: true

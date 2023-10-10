@@ -1,9 +1,19 @@
 <template>
-  <div id="home-root" class="index">
+  <div id="home-root" class="index relative">
+    <div
+      v-if="isLoading"
+      class="absolute w-full h-full overflow-hidden m-0 p-0 flex justify-center items-center bg-black/40 z-50 flex-col gap-3"
+    >
+      <span class="loading loading-ring loading-lg"></span>
+      <span class="font-semibold">{{ loadingText }}</span>
+    </div>
     <main
       class="h-screen w-screen flex flex-col justify-center items-center relative"
     >
-      <div v-if="isShowAlert" class="absolute top-6 left-0 w-full flex justify-center overflow-hidden">
+      <div
+        v-if="isShowAlert"
+        class="absolute top-6 left-0 w-full flex justify-center overflow-hidden"
+      >
         <HomeAlert />
       </div>
       <HomeDebugLoginfo
@@ -70,6 +80,12 @@ export default {
     return {};
   },
   computed: {
+    isLoading() {
+      return this.$store.getters["page/home/isLoading"];
+    },
+    loadingText() {
+      return this.$store.getters["page/home/loadingText"];
+    },
     chatId() {
       return this.$store.getters["chats/selectedChatId"];
     },
@@ -120,8 +136,23 @@ export default {
   },
   middleware: ["auth"],
   methods: {
-    fetchData() {
-      this.$store.dispatch("contacts/fetchData");
+    async fetchData() {
+      this.$store.commit("page/home/NEW_LOADING", {
+        status: true,
+        text: "Fetching data...",
+      });
+      try {
+        await this.$store.dispatch("contacts/fetchData");
+        await this.$store.dispatch("chats/fetchData");
+
+        for (let chat of this.$store.getters["chats/items"])
+          await this.$store.dispatch("messages/fetchData", chat.id);
+
+        await new Promise((resolve) => {
+          setTimeout(() => resolve(), 2500);
+        });
+      } catch (e) {}
+      this.$store.commit("page/home/CLEAR_LOADING");
     },
     setupSocketForChat() {
       this.registerId();
@@ -131,26 +162,30 @@ export default {
       console.log("[PLUGINS: INFO] Waiting for incoming message...");
       this.$socket.on("receive-message", (data) => {
         console.log("[PLUGINS: INFO] RECEIVED NEW MESSAGE: ", data);
+
+        const { content, sender, time, messageId, chatId } = data;
+        
         const participants = [this.$auth.user.id, data.sender];
-        let chatId = this.$store.getters["chats/isAnyChatByParticipants"](
-          [...participants].sort()
-        );
+
         const msg = {
-          sender: data.sender,
-          content: data.content,
-          time: new Date(data.time),
+          sender_id: sender,
+          content,
+          time: new Date(time),
+          chat_id: chatId,
+          id: messageId,
+          isRead: true,
+          isDelivered: true
         };
-        if (!chatId) {
-          chatId = uuidv4();
+        
+        if(!this.$store.getters["chats/chatById"](chatId)){
           this.$store.commit("chats/PUSH_CHAT", {
             id: chatId,
             participants,
             time: msg.time,
-            isRead: false,
             messages: [msg],
           });
         } else {
-          this.$store.commit("chats/PUSH_MESSAGE_BY_ID", { id: chatId, msg });
+          this.$store.commit("chats/PUSH_MESSAGE_BY_ID", {id: chatId, msg})
         }
       });
     },
@@ -215,16 +250,16 @@ html:has(#home-root) {
 }
 body:has(#home-root) {
   min-height: 100vh;
-  min-height: -webkit-fill-available;;
+  min-height: -webkit-fill-available;
   overflow: hidden;
 }
 
 body .index {
   position: fixed;
-    inset: 0;
-    overflow: auto;
+  inset: 0;
+  overflow: auto;
 
-    display: grid;
-    place-items: center;
+  display: grid;
+  place-items: center;
 }
 </style>
