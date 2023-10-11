@@ -93,7 +93,8 @@ export const actions = {
       console.log("[API] Adding contact..")
       const response = await this.$axios.post('/contact', { userId: contact.id }
       )
-      if (response.status === 201) {
+      // either created or already exist, save to the store
+      if (response.status === 201 || response.status === 409) {
         console.log("[API] Contact added..")
         commit('PUSH_CONTACT', contact)
       }
